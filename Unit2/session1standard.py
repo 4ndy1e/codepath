@@ -23,14 +23,14 @@ def lineup(artists, set_times):
 
   return result
 
-artists1 = ["Kendrick Lamar", "Chappell Roan", "Mitski", "Rosalia"]
-set_times1 = ["9:30 PM", "5:00 PM", "2:00 PM", "7:30 PM"]
+# artists1 = ["Kendrick Lamar", "Chappell Roan", "Mitski", "Rosalia"]
+# set_times1 = ["9:30 PM", "5:00 PM", "2:00 PM", "7:30 PM"]
 
-artists2 = []
-set_times2 = []
+# artists2 = []
+# set_times2 = []
 
-print(lineup(artists1, set_times1))
-print(lineup(artists2, set_times2))
+# print(lineup(artists1, set_times1))
+# print(lineup(artists2, set_times2))
 
 # ---
 
@@ -56,15 +56,54 @@ def get_artist_info(artist, festival_schedule):
     return festival_schedule[artist]
   return {'message' : 'Artist not found'}
 
-festival_schedule = {
-    "Blood Orange": {"day": "Friday", "time": "9:00 PM", "stage": "Main Stage"},
-    "Metallica": {"day": "Saturday", "time": "8:00 PM", "stage": "Main Stage"},
-    "Kali Uchis": {"day": "Sunday", "time": "7:00 PM", "stage": "Second Stage"},
-    "Lawrence": {"day": "Friday", "time": "6:00 PM", "stage": "Main Stage"}
-}
+# festival_schedule = {
+#     "Blood Orange": {"day": "Friday", "time": "9:00 PM", "stage": "Main Stage"},
+#     "Metallica": {"day": "Saturday", "time": "8:00 PM", "stage": "Main Stage"},
+#     "Kali Uchis": {"day": "Sunday", "time": "7:00 PM", "stage": "Second Stage"},
+#     "Lawrence": {"day": "Friday", "time": "6:00 PM", "stage": "Main Stage"}
+# }
 
-print(get_artist_info("Blood Orange", festival_schedule)) 
-print(get_artist_info("Taylor Swift", festival_schedule))  
+# print(get_artist_info("Blood Orange", festival_schedule)) 
+# print(get_artist_info("Taylor Swift", festival_schedule))
 
+
+
+
+"""
+Given two lists of length n, crew and position, map the space station crew to their position on board the international space station.
+Each crew member crew[i] has job position[i] on board, where 0 <= i < n and len(crew) == len(position).
+
+Input:
+  Two lists: crew and position of length n
+Output:
+  Dict mapping each crew member to their position
+Constraints:
+  0 <= i < n
+  len(crew) === len(position)
+Edge Cases: 
+  Empty list: return {}
+  Empty name: skip
+
+Plan: 
+  Initialize empty dict
+  Use a for loop iterate through both lists mapping each crew and position at index i to to each other as key and value pairs 
+"""
+
+def space_crew(crew, position):
+  res = {}
+
+  for i in range(len(crew)):
+    res[crew[i]] = position[i]
+
+  return res
+
+exp70_crew = ["Andreas Mogensen", "Jasmin Moghbeli", "Satoshi Furukawa", "Loral O'Hara", "Konstantin Borisov"]
+exp70_positions = ["Commander", "Flight Engineer", "Flight Engineer", " Flight Engineer", "Flight Engineer"] 
+
+ax3_crew = ["Michael Lopez-Alegria", "Walter Villadei", "Alper Gezeravci", "Marcus Wandt"]
+ax3_positions = ["Commander", "Mission Pilot", "Mission Specialist", "Mission Specialist"]
+
+print(space_crew(exp70_crew, exp70_positions))
+print(space_crew(ax3_crew, ax3_positions))
 
 
