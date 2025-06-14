@@ -97,13 +97,46 @@ def space_crew(crew, position):
 
   return res
 
-exp70_crew = ["Andreas Mogensen", "Jasmin Moghbeli", "Satoshi Furukawa", "Loral O'Hara", "Konstantin Borisov"]
-exp70_positions = ["Commander", "Flight Engineer", "Flight Engineer", " Flight Engineer", "Flight Engineer"] 
+# exp70_crew = ["Andreas Mogensen", "Jasmin Moghbeli", "Satoshi Furukawa", "Loral O'Hara", "Konstantin Borisov"]
+# exp70_positions = ["Commander", "Flight Engineer", "Flight Engineer", " Flight Engineer", "Flight Engineer"] 
 
-ax3_crew = ["Michael Lopez-Alegria", "Walter Villadei", "Alper Gezeravci", "Marcus Wandt"]
-ax3_positions = ["Commander", "Mission Pilot", "Mission Specialist", "Mission Specialist"]
+# ax3_crew = ["Michael Lopez-Alegria", "Walter Villadei", "Alper Gezeravci", "Marcus Wandt"]
+# ax3_positions = ["Commander", "Mission Pilot", "Mission Specialist", "Mission Specialist"]
 
-print(space_crew(exp70_crew, exp70_positions))
-print(space_crew(ax3_crew, ax3_positions))
+# print(space_crew(exp70_crew, exp70_positions))
+# print(space_crew(ax3_crew, ax3_positions))
+
+"""
+Write a function data_difference() that accepts two dictionaries experiment1 and experiment2 and returns a new dictionary that contains only key-value pairs found exclusively in experiment1 but not in experiment2.
+
+Input: Two dictionaries (experiment1 experiment2)
+Output: Dictionary (key-val pairs only found in experiment1)
+Constraints: exclusively experiment1
+Edge Cases: 
+  Empty lists: return {}
+  Everything in exp1 is in exp2: return {}
+
+Plan: 
+  1. Create empty dict
+  2. Loop through exp1 and check if the current key-val pair is exclusive 
+      - exp1 key does not exist in exp2
+      - exp1[key] != exp2[key]   #values do not equal each other 
+  3. return dict 
+"""
+
+def data_difference(exp1, exp2):
+  res = {}
+
+  for key, val in exp1.items():
+
+    if key not in exp2.keys() or exp1[key] != exp2[key]:
+      res[key] = val 
+
+  return res
+
+# exp1_data = {'temperature': 22, 'pressure': 101.3, 'humidity': 45}
+# exp2_data = {'temperature': 18, 'pressure': 101.3, 'radiation': 0.5}
+
+# print(data_difference(exp1_data, exp2_data))
 
 
