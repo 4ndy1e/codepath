@@ -140,3 +140,43 @@ def data_difference(exp1, exp2):
 # print(data_difference(exp1_data, exp2_data))
 
 
+"""
+NASA has asked the public to vote on a new name for one of the nodes in the International Space Station. Given a list of strings votes where each string in the list is a voter's suggested new name, implement a function get_winner() that returns the suggestion with the most number of votes.
+
+If there is a tie, return either option.
+
+Input: List (votes, where each index is a vote for the name)
+Output: String (name of the most voted)
+Constraints: Return only one string 
+Edge Cases: 
+  Empty List: empty string
+  Empty name: Skip over it 
+
+Plan: 
+  1. Create a dict to store the  frequency of all names
+  2. Create a loop to go through each name and increment the value of each name when it occurs
+  3. Return the max of key of the dict
+"""
+
+def get_winner(votes):
+  freqeuncy = {}
+
+  highestVote = 0
+  mostVotedName = ""
+
+  for name in votes:
+    freqeuncy[name] = freqeuncy.get(name, 0) + 1
+
+    if freqeuncy[name] > highestVote:
+      highestVote = freqeuncy[name]
+      mostVotedName = name
+
+  return mostVotedName
+
+
+# votes1 = ["Colbert", "Serenity", "Serenity", "Tranquility", "Colbert", "Colbert"]
+# votes2 = ["Colbert", "Serenity", "Serenity", "Tranquility", "Colbert"]
+
+# print(get_winner(votes1))
+# print(get_winner(votes2))
+
