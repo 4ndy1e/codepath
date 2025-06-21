@@ -1,33 +1,44 @@
-# hello wworld
+"""
+You are managing a social media platform and need to ensure that posts are properly formatted. Each post must have balanced and correctly nested tags, such as () for mentions, [] for hashtags, and {} for links. You are given a string representing a post's content, and your task is to determine if the tags in the post are correctly formatted.
+
+Input: String 
+Output: Bool
+Constraints: Each opening tag has a corresponding closing tag
+Edge Cases:
+  - Empty String: Return True
+
+Plan: 
+1. Create a dict to identify opening and closing tags 
+2. Initialize a dict to keep track of opening tags 
+2. Loop through each character
+  - If it is a opening tag append it to the stack
+  - Otherwise, it is a closing tag   
+    - If top of stack opening tag matches closing tag, pop
+    - Otherwise return false
+"""
 
 def is_valid_post_format(posts):
-    stack = []
-    hmap = {")":"(", "]":"[","}":"{"}
+  tagsDict = {
+    "}" : "{",
+    ")" : "(",
+    "]" : "["
+  }
 
-    for char in posts:
-        if char not in hmap:
-            stack.append(char) 
-        else:
-            if stack:
-                n = stack.pop()
-                if not hmap[char] == n:
-                    return False 
-    return True if len(stack) == 0 else False
-                
-# U ...check if the parens are valid, thus opened is followed with close for a particular
-#      type of parenthesis
-#   i - string of parens    o - boolean    c -- open must match with close  e- empty string True
-# P ..
-#    High level: use stacks for this problem
-#                use dict to track the correct pair for a particular parenthesis {):(}
-#                if we meet an open parens we add to the stack
-#                if we meet a close parens, if the stack is not empty : we pop from the stack and check
-#                if key ( current close parens) h as
-#                correct open parens as the value
-#                if the stack is empty we return True, otherwise False
-#                ()))
-# Implementation
+  stack = []
 
+  for char in posts:
+    # if opening tag, add to stack
+    if char in tagsDict.values():
+      stack.append(char)
+    # otherwise check top of stack's opening tag
+    else:
+      # if top of stack matches its closing tag, pop and continue, otherwise return false
+      if len(stack) != 0 and stack[-1] == tagsDict[char]:
+        stack.pop()
+      else:
+        return False
+      
+  return True
 
 # print(is_valid_post_format("()"))
 # print(is_valid_post_format("()[]{}")) 
