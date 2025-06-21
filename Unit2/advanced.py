@@ -46,3 +46,5 @@ art_pieces3 = [1,1,1,1]
 print(find_balanced_subsequence(art_pieces1))
 print(find_balanced_subsequence(art_pieces2))
 print(find_balanced_subsequence(art_pieces3))
+
+
