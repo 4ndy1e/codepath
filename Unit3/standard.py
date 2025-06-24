@@ -127,22 +127,22 @@ def manage_stage_changes(changes):
 4. Dequeue each request from the queue and append the performance name to the `result` list.
 5. Return the `result` list.
 """
-# from collections import deque
+from collections import deque
 
 def process_performance_requests(requests):
-  sorted_req = sorted(requests, reverse=True)
-
+  sorted_queue = deque(sorted(requests, reverse=True))
   result = []
 
-  for req in sorted_req:
-    priority, performance = req
+  while sorted_queue:
+    priority, performance = sorted_queue.popleft()
     result.append(performance)
 
   return result
 
-# print(process_performance_requests([(3, 'Dance'), (5, 'Music'), (1, 'Drama')]))
-# print(process_performance_requests([(2, 'Poetry'), (1, 'Magic Show'), (4, 'Concert'), (3, 'Stand-up Comedy')]))
-# print(process_performance_requests([(1, 'Art Exhibition'), (3, 'Film Screening'), (2, 'Workshop'), (5, 'Keynote Speech'), (4, 'Panel Discussion')]))
+
+print(process_performance_requests([(3, 'Dance'), (5, 'Music'), (1, 'Drama')]))
+print(process_performance_requests([(2, 'Poetry'), (1, 'Magic Show'), (4, 'Concert'), (3, 'Stand-up Comedy')]))
+print(process_performance_requests([(1, 'Art Exhibition'), (3, 'Film Screening'), (2, 'Workshop'), (5, 'Keynote Speech'), (4, 'Panel Discussion')]))
 
 """
 Input: List (numbers)
@@ -180,4 +180,59 @@ def collect_festival_points(points):
 # print(collect_festival_points([2, 7, 4, 6])) 
 # print(collect_festival_points([1, 5, 9, 2, 8])) 
 
+"""
+Input: 2 strings 
+Output: string (merged result of the 2 strings)
+Constraints: append remaining substring if one string is longer
+Edge Cases:
+  - One empty string: return other string
+  - Two Empty strings: return empty string
 
+Plan:
+High level: Use two pointers to iterate through both strings and alternatively add each char to a result string. 
+
+Initialize an empty string to store the result 
+Initialize two pointers at the beginning of each string
+
+while both pointers are within the length of their strings:
+  result += schedule1[firstPointer]
+  move first pointer (incrementing)
+
+  result += schedule2[secondPointer]
+  move second pointer (incrementing)
+
+while firstPointer < len(schedule1):
+  result += schedule1[firstPointer]
+  firstPointer += 1
+
+while secondPointer < len(schedule2):
+  result += schedule2[secondPointer]
+  secondPointer += 1
+
+return result 
+"""
+
+def merge_schedules(schedule1, schedule2):
+  result = ""
+  pointer1, pointer2 = 0, 0
+
+  while pointer1 < len(schedule1) and pointer2 < len(schedule2):
+    result += schedule1[pointer1]
+    pointer1 += 1
+
+    result += schedule2[pointer2]
+    pointer2 += 1
+
+  while pointer1 < len(schedule1):
+    result += schedule1[pointer1]
+    pointer1 += 1
+
+  while pointer2 < len(schedule2):
+    result += schedule2[pointer2]
+    pointer2 += 1
+
+  return result 
+
+# print(merge_schedules("abc", "pqr")) 
+# print(merge_schedules("ab", "pqrs")) 
+# print(merge_schedules("abcd", "pq")) 
