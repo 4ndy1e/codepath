@@ -144,3 +144,40 @@ def process_performance_requests(requests):
 # print(process_performance_requests([(2, 'Poetry'), (1, 'Magic Show'), (4, 'Concert'), (3, 'Stand-up Comedy')]))
 # print(process_performance_requests([(1, 'Art Exhibition'), (3, 'Film Screening'), (2, 'Workshop'), (5, 'Keynote Speech'), (4, 'Panel Discussion')]))
 
+"""
+Input: List (numbers)
+Output: integer (total of all points)
+Constraints: Use stack
+Edge Cases: 
+  - Empty list: return 0
+
+Plan: 
+Initialize a empty stack to keep track of the points
+Create a variable to keep track of the total
+
+for point in points:
+  add each point to the stack
+
+while stack is not empty:
+  pop value on the stack and add it to the total
+
+return total
+"""
+
+def collect_festival_points(points):
+  stack = []
+  total = 0
+
+  for point in points:
+    stack.append(point)
+
+  while stack:
+    total += stack.pop()
+
+  return total
+
+# print(collect_festival_points([5, 8, 3, 10])) 
+# print(collect_festival_points([2, 7, 4, 6])) 
+# print(collect_festival_points([1, 5, 9, 2, 8])) 
+
+
