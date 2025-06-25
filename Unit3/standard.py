@@ -293,3 +293,43 @@ def next_greater_event(schedule1, schedule2):
 
 # print(next_greater_event([4, 1, 2], [1, 3, 4, 2])) 
 # print(next_greater_event([2, 4], [1, 2, 3, 4])) 
+
+"""
+You are organizing a cultural festival and have a list of performances represented by an integer array performances. Each performance is classified as either an even type (e.g., dance, music) or an odd type (e.g., drama, poetry).
+
+Your task is to rearrange the performances so that all the even-type performances appear at the beginning of the array, followed by all the odd-type performances.
+
+Return any array that satisfies this condition.
+
+Input: list (performances)
+Output: list (ordered where evens are at the beginning of the array and odds are at the end)
+Constraints: evens at the beginning and odds at the end
+Edge Case:
+  - list of 1 element: return list of that element
+  - empty list: return empty list
+
+Plan:
+Initialize a queue to store the odd and even types 
+
+for num in performances:
+  if number is even:
+    append to left of queue
+  else:
+    append to right of queue
+
+return the queue as a list
+""" 
+
+def sort_performances_by_type(performances):
+  queue = deque()
+
+  for num in performances:
+    if num % 2 == 0:
+      queue.appendleft(num)
+    else:
+      queue.append(num)
+
+  return list(queue)
+
+print(sort_performances_by_type([3, 1, 2, 4]))  
+print(sort_performances_by_type([0]))  
