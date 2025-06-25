@@ -140,9 +140,9 @@ def process_performance_requests(requests):
   return result
 
 
-print(process_performance_requests([(3, 'Dance'), (5, 'Music'), (1, 'Drama')]))
-print(process_performance_requests([(2, 'Poetry'), (1, 'Magic Show'), (4, 'Concert'), (3, 'Stand-up Comedy')]))
-print(process_performance_requests([(1, 'Art Exhibition'), (3, 'Film Screening'), (2, 'Workshop'), (5, 'Keynote Speech'), (4, 'Panel Discussion')]))
+# print(process_performance_requests([(3, 'Dance'), (5, 'Music'), (1, 'Drama')]))
+# print(process_performance_requests([(2, 'Poetry'), (1, 'Magic Show'), (4, 'Concert'), (3, 'Stand-up Comedy')]))
+# print(process_performance_requests([(1, 'Art Exhibition'), (3, 'Film Screening'), (2, 'Workshop'), (5, 'Keynote Speech'), (4, 'Panel Discussion')]))
 
 """
 Input: List (numbers)
@@ -236,3 +236,60 @@ def merge_schedules(schedule1, schedule2):
 # print(merge_schedules("abc", "pqr")) 
 # print(merge_schedules("ab", "pqrs")) 
 # print(merge_schedules("abcd", "pq")) 
+
+"""
+At a cultural festival, you have a schedule of events where each event has a unique popularity score. The schedule is represented by two distinct 0-indexed integer arrays schedule1 and schedule2, where schedule1 is a subset of schedule2.
+
+For each event in schedule1, find its position in schedule2 and determine the next event in schedule2 with a higher popularity score. If there is no such event, then the answer for that event is -1.
+
+Return an array ans of length schedule1.length such that ans[i] is the next greater event's popularity score as described above.
+
+Input: two lists (schedule1 and schedule2)
+Output: list (of length schedule1)
+Constraints: 
+  - schedule1 is a subset of schedule2
+  - output is of length schedule1
+Edge Cases:
+  - two empty lists: return empty list 
+
+Plan: 
+Initialize empty dict to store element and indexes of schedule2
+Initialize list to keep track of result
+
+for score in schedule2:
+  dict[score] = index
+
+for score in schedule1:
+  startingIndex = dict[score]
+
+  for i in range(startingIndex, len(schedule2)):
+    if schedule2[i] > score:
+      result.append(schedule[i])
+      break
+
+return result
+"""
+
+def next_greater_event(schedule1, schedule2):
+  dict = {}
+
+  for i in range(len(schedule2)):
+    dict[schedule2[i]] = i
+
+  result = []
+
+  for score in schedule1:
+    startingIndex = dict[score]
+    nextGreaterScore = -1
+
+    for i in range(startingIndex, len(schedule2)):
+      if schedule2[i] > score:
+        nextGreaterScore = schedule2[i]
+        break
+    
+    result.append(nextGreaterScore)
+
+  return result
+
+# print(next_greater_event([4, 1, 2], [1, 3, 4, 2])) 
+# print(next_greater_event([2, 4], [1, 2, 3, 4])) 
