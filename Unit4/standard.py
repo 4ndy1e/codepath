@@ -18,6 +18,8 @@ for nft in nft_colletion:
   add name of each nft to results
 
 return results
+
+This will result in a time complexity of O(n) and space complexity O(n)
 """
 
 def extract_nft_names(nft_collection):
@@ -43,6 +45,24 @@ nft_collection_3 = [
     {"name": "Golden Hour", "creator": "SunsetArtist", "value": 8.9}
 ]
 
-print(extract_nft_names(nft_collection))
-print(extract_nft_names(nft_collection_2))
-print(extract_nft_names(nft_collection_3))
+# print(extract_nft_names(nft_collection))
+# print(extract_nft_names(nft_collection_2))
+# print(extract_nft_names(nft_collection_3))
+
+"""
+NFT Collection Review:
+
+You're responsible for ensuring the quality of the NFT collection before it is displayed in the virtual gallery. One of your tasks is to review and debug the code that extracts the names of NFTs from the collection. A junior developer wrote the initial version of this function, but it contains some bugs that prevent it from working correctly.
+
+There is an error in the for loop where we are not correctly appending to the the nft_names list. 
+"""
+
+def extract_nft_names(nft_collection):
+    nft_names = []
+    for nft in nft_collection:
+        nft_names.append(nft["name"])
+    return nft_names
+
+# print(extract_nft_names(nft_collection))
+# print(extract_nft_names(nft_collection_2))
+# print(extract_nft_names(nft_collection_3))
