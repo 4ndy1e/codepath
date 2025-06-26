@@ -66,3 +66,64 @@ def extract_nft_names(nft_collection):
 # print(extract_nft_names(nft_collection))
 # print(extract_nft_names(nft_collection_2))
 # print(extract_nft_names(nft_collection_3))
+
+"""
+Input: list (of dictionaries representing NFT information)
+Output: list (of popular creators)
+Constraints: creators are popular if they have created more than one nft 
+Edge Cases: 
+  - All creators have one nft: return empty list 
+  - Empty nft collection: return empty list 
+
+Plan: 
+Initialize a dict to keep track of the names of creators
+Initialize a list to keep track of popular creators
+
+for nft in nft_collection:
+  if nft not in dict:
+    add nft to the dict with a value of 1
+  elif nft has not occured more than 2 times:
+    add nft to the popular creators list
+
+return list of popular creators
+
+Time and Complexity: 
+Time: O(n) because we are looping through the nft_collection, where the collection has n items 
+Space: O(n) because we can have a worst case scenerio of the set being the same length of the nft_collection
+"""
+
+def identify_popular_creators(nft_collection):
+  occurences = {}
+  popularCreators = []
+
+  for nft in nft_collection:
+    occurences[nft["creator"]] = occurences.get(nft["creator"], 0) + 1
+
+    if occurences[nft["creator"]] == 2: 
+       popularCreators.append(nft["creator"])
+
+  return popularCreators
+
+nft_collection = [
+    {"name": "Abstract Horizon", "creator": "ArtByAlex", "value": 5.4},
+    {"name": "Pixel Dreams", "creator": "DreamyPixel", "value": 7.2},
+    {"name": "Urban Jungle", "creator": "ArtByAlex", "value": 4.5},
+    {"name": "Urban Jungle", "creator": "ArtByAlex", "value": 4.5}
+]
+
+nft_collection_2 = [
+    {"name": "Crypto Kitty", "creator": "CryptoPets", "value": 10.5},
+    {"name": "Galactic Voyage", "creator": "SpaceArt", "value": 6.7},
+    {"name": "Future Galaxy", "creator": "SpaceArt", "value": 8.3}
+]
+
+nft_collection_3 = [
+    {"name": "Golden Hour", "creator": "SunsetArtist", "value": 8.9}
+]
+
+print(identify_popular_creators(nft_collection))
+print(identify_popular_creators(nft_collection_2))
+print(identify_popular_creators(nft_collection_3))
+       
+        
+
