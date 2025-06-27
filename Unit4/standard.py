@@ -170,6 +170,72 @@ print(average_nft_value(nft_collection_2))
 nft_collection_3 = []
 print(average_nft_value(nft_collection_3))
 
+"""
+Input: list (collection of nfts grouped into collections, each collection may contain more than one nft)
+Output: list (nfts that have the tag that we are looking for)
+Constraints: NFTs are grouped into collections, each NFT may contain more than one NFT 
+Edge Cases:
+  - empty collection: return empty list 
 
-        
+Plan: 
+initialize list to keep track of the nfts with the specified tag
+
+for collection in nft_collection:
+  for nft in collection:
+    if tag is in the nft["tags"]:
+      append nft name to result list
+
+return result list
+
+Time and Space Complexity: 
+Time: O(n) beacause we are looping through each element in the collection and going through their tags (finite number that will not exceed n as n approaches infinity)
+Space: O(n) beacuse we are initializing a list to store the results
+""" 
+
+def search_nft_by_tag(nft_collections, tag):
+  tagged_nfts = []
+
+  for collection in nft_collections:
+    for nft in collection:
+      if tag in nft["tags"]:
+        tagged_nfts.append(nft["name"])
+
+  return tagged_nfts
+
+# nft_collections = [
+#     [
+#         {"name": "Abstract Horizon", "tags": ["abstract", "modern"]},
+#         {"name": "Pixel Dreams", "tags": ["pixel", "retro"]}
+#     ],
+#     [
+#         {"name": "Urban Jungle", "tags": ["urban", "landscape"]},
+#         {"name": "City Lights", "tags": ["modern", "landscape"]}
+#     ]
+# ]
+
+# nft_collections_2 = [
+#     [
+#         {"name": "Golden Hour", "tags": ["sunset", "landscape"]},
+#         {"name": "Sunset Serenade", "tags": ["sunset", "serene"]}
+#     ],
+#     [
+#         {"name": "Pixel Odyssey", "tags": ["pixel", "adventure"]}
+#     ]
+# ]
+
+# nft_collections_3 = [
+#     [
+#         {"name": "The Last Piece", "tags": ["finale", "abstract"]}
+#     ],
+#     [
+#         {"name": "Ocean Waves", "tags": ["seascape", "calm"]},
+#         {"name": "Mountain Peak", "tags": ["landscape", "adventure"]}
+#     ]
+# ]
+
+# print(search_nft_by_tag(nft_collections, "landscape"))
+# print(search_nft_by_tag(nft_collections_2, "sunset"))
+# print(search_nft_by_tag(nft_collections_3, "modern"))
+     
+
 
