@@ -121,9 +121,55 @@ nft_collection_3 = [
     {"name": "Golden Hour", "creator": "SunsetArtist", "value": 8.9}
 ]
 
-print(identify_popular_creators(nft_collection))
-print(identify_popular_creators(nft_collection_2))
-print(identify_popular_creators(nft_collection_3))
+# print(identify_popular_creators(nft_collection))
+# print(identify_popular_creators(nft_collection_2))
+# print(identify_popular_creators(nft_collection_3))
        
+"""
+Iput: list (collection of nfts and their information)
+Output: integer (average value of the nft's in the collection)
+Constraints: 
+  - every nft has a value
+Edge:
+  - empty list: average  = 0
+
+Plan: 
+Initialize totalValue variable to keep track of value of nft's 
+
+for nft in the nft_collection:
+  add the nft value to the totalValue variable
+
+return totalValue / len(nft_collection) 
+
+Time and Space Complexity: 
+Time: O(n) because we are looping through each element in the nft collection
+Space: O(1) because we are only using one variable to keep track of the total 
+"""
+
+def average_nft_value(nft_collection):
+  totalVal = 0
+
+  for nft in nft_collection:
+     totalVal += nft["value"]
+
+  return 0 if len(nft_collection) == 0 else totalVal / len(nft_collection)
+
+nft_collection = [
+    {"name": "Abstract Horizon", "creator": "ArtByAlex", "value": 5.4},
+    {"name": "Pixel Dreams", "creator": "DreamyPixel", "value": 7.2},
+    {"name": "Urban Jungle", "creator": "ArtByAlex", "value": 4.5}
+]
+print(average_nft_value(nft_collection))
+
+nft_collection_2 = [
+    {"name": "Golden Hour", "creator": "SunsetArtist", "value": 8.9},
+    {"name": "Sunset Serenade", "creator": "SunsetArtist", "value": 9.4}
+]
+print(average_nft_value(nft_collection_2))
+
+nft_collection_3 = []
+print(average_nft_value(nft_collection_3))
+
+
         
 
