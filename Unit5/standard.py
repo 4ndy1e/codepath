@@ -13,11 +13,25 @@ class Villager:
         self.catchphrase = catchphrase
         self.furniture = []
 
+    # add method from problem 2 
+    def greet_player(self, player_name): 
+      return f"{self.name}: Hey there, {player_name},! How's it going, {self.catchphrase}!"
+
 # Instantiate your villager here
 apollo = Villager("Apollo", "Eagle", "pah")
 
-print(apollo.name)  
-print(apollo.species)  
-print(apollo.catchphrase) 
-print(apollo.furniture) 
+# print(apollo.name)  
+# print(apollo.species)  
+# print(apollo.catchphrase) 
+# print(apollo.furniture) 
 
+"""
+Problem 2: 
+Step 1: Using the Villager class from Problem 1, add the following greet_player() method to your existing code:
+Step 2: Step 2: Create a second instance of Villager in a variable named bones.
+Step 3: Call the method greet_player() with your name and print out "Bones: Hey there, <your name>! How's it going, yip yip!". For example, if your name is Tram, "Bones: Hey there, Tram! How's it going, yip yip?" would be printed out to the console.
+"""
+
+bones = Villager("Bones", "Dog", "yip yip")
+
+# print(bones.greet_player("Andy"))
