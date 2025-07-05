@@ -35,3 +35,13 @@ Step 3: Call the method greet_player() with your name and print out "Bones: Hey 
 bones = Villager("Bones", "Dog", "yip yip")
 
 # print(bones.greet_player("Andy"))
+
+"""
+Problem 3: Update Catchphrase
+In Animal Crossing, as players become friends with villagers, the villagers might ask the player to suggest a new catchphrase.
+Adding on to your existing code, update bones so that his catchphrase is "ruff it up" instead of its current value, "yip yip".
+"""
+
+bones.catchphrase = "ruff it up"
+
+print(bones.greet_player("Andy"))
