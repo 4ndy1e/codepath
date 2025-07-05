@@ -16,6 +16,22 @@ class Villager:
     # add method from problem 2 
     def greet_player(self, player_name): 
       return f"{self.name}: Hey there, {player_name},! How's it going, {self.catchphrase}!"
+    
+    # add method from problem 4
+    def set_catchphrase(self, catchphrase):
+      if len(catchphrase)  >= 20:
+        print("Invalid Character")
+        return
+        
+      for char in catchphrase:
+        if not (char.isalpha() or char.isspace()):
+          print("Invalid Character")
+          return
+        
+      print("Updated Catchphrase!")
+      self.catchphrase = catchphrase
+
+
 
 # Instantiate your villager here
 apollo = Villager("Apollo", "Eagle", "pah")
@@ -44,4 +60,22 @@ Adding on to your existing code, update bones so that his catchphrase is "ruff i
 
 bones.catchphrase = "ruff it up"
 
-print(bones.greet_player("Andy"))
+# print(bones.greet_player("Andy"))
+
+"""
+Problem 4: Set Character
+In the previous exercise, we accessed and modified a player’s catchphrase attribute directly. Instead of allowing users to update their player directly, it is common to create setter methods that users can call to update class attributes. This has a few different benefits, including allowing us to validate data before updating our class instance.
+
+Update your Villager class with a method set_catchphrase() that takes in one parameter new_catchphrase.
+
+If new_catchphrase is valid, it should update the villager's catchphrase attribute to have value new_catchphrase and print "Catchphrase updated".
+Otherwise, it should print out "Invalid catchphrase".
+Valid catchphrases are less than 20 characters in length. They must all contain only alphabetic and whitespace characters.
+"""
+
+alice = Villager("Alice", "Koala", "guvnor")
+
+alice.set_catchphrase("sweet dreams")
+print(alice.catchphrase)
+alice.set_catchphrase("#?!")
+print(alice.catchphrase)
