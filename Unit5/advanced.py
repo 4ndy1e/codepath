@@ -208,3 +208,49 @@ fish_list = Node("Carp", Node("Dace", Node("Cherry Salmon")))
 print(fish_chances(fish_list, "Dace"))
 print(fish_chances(fish_list, "Rainbow Trout"))
 
+
+# Problem 8
+"""
+input: head (linked list that we will be adding to), new_fish (fish that will be added)
+output: head (with the new fish added to the end of the list)
+constraint: none
+edge cases: none
+
+Plan: 
+High Level: Loop through all items in the linked list until we get to the last element in the linked list. Set the next of the last element to the new_fish
+
+current = head
+while current.next != None: 
+    current = current.next
+    
+current.next = new_fish
+return head
+"""
+
+class Node:
+    def __init__(self, fish_name, next=None):
+        self.fish_name = fish_name
+        self.next = next
+
+# For testing
+def print_linked_list(head):
+    current = head
+    while current:
+        print(current.fish_name, end=" -> " if current.next else "\n")
+        current = current.next
+
+def restock(head, new_fish):
+    current = head
+    
+    # move onto next element until we are on the last element in the list
+    while current.next != None:
+        current = current.next
+        
+    # create a new node with the fish name and set as next
+    new_fish_node = Node(new_fish)
+    current.next = new_fish_node
+    
+    return head
+
+fish_list = Node("Carp", Node("Dace", Node("Cherry Salmon")))
+print_linked_list(restock(fish_list, "Rainbow Trout"))
