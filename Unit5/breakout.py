@@ -205,6 +205,6 @@ def fish_chances(head, fish_name):
     return round((float(totalFishName) / float(length)), 2)
 
 fish_list = Node("Carp", Node("Dace", Node("Cherry Salmon")))
-print(fish_chances(fish_list, "Dace"))
-print(fish_chances(fish_list, "Rainbow Trout"))
+# print(fish_chances(fish_list, "Dace"))
+# print(fish_chances(fish_list, "Rainbow Trout"))
 
