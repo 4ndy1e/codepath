@@ -130,33 +130,97 @@ def on_repeat(playlist_head):
         
     return False
     
-song1 = SongNode("GO!", "Common")
-song2 = SongNode("N95", "Kendrick Lamar")
-song3 = SongNode("WIN", "Jay Rock")
-song4 = SongNode("ATM", "J. Cole")
+# song1 = SongNode("GO!", "Common")
+# song2 = SongNode("N95", "Kendrick Lamar")
+# song3 = SongNode("WIN", "Jay Rock")
+# song4 = SongNode("ATM", "J. Cole")
+# song1.next = song2
+# song2.next = song3
+# song3.next = song4
+# song4.next = song2
+
+# print(on_repeat(song1))
+    
+"""
+Input: head (playlist_head)
+Output: length of the cycle (if any)
+Constraints: 
+Edge Cases: 
+    - Empty list -> return 0
+    - List of one node (with cycle) -> return 1
+    
+Plan:
+High Level: Use the fast and slow pointer technique to determine whether or not there is a cycle. If there is a cycle, find the start of the cycle (setting flow to head, moving fast one step). Once the pointers meet, this is the start. Initialize a pointer to keep track of the start and move one pointer until it meets the start again (keep track of length).
+
+Determine whether or not the list contains a cycle:
+slow = fast = head
+
+while fast and fast.next: 
+    slow = slow.next
+    fast = fast.next.next
+    
+    if slow == fast:
+        break
+else:
+    return 0
+    
+Find the start of the cycle:
+slow = head
+
+while slow != fast:
+    slow = slow.next
+    fast = fast.next
+    
+Keep track of the length and move one of the pointers until they land on each other again
+length = 1
+start = slow 
+fast = fast.next
+
+while fast != start:
+    length += 1
+    fast = fast.next
+    
+return length
+"""
+
+def loop_length(playlist_head):
+    slow = fast = playlist_head
+    
+    # Determine whether a cycle is in the list or not 
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        
+        if slow == fast:
+            break
+    else:
+        return 0
+    
+    # Find the start of the linked list cycle
+    slow = playlist_head
+    
+    while slow != fast:
+        slow = slow.next
+        fast = fast.next
+        
+    # Find the length of the linked list cycle
+    length = 1
+    start = slow 
+    fast = fast.next
+    
+    while fast != start:
+        length += 1
+        fast = fast.next
+        
+    return length
+
+song1 = SongNode("Wein", "AL SHAMI")
+song2 = SongNode("Si Ai", "Tayna")
+song3 = SongNode("Qalbi", "Yasser Abd Alwahab")
+song4 = SongNode("La", "DYSTINCT")
 song1.next = song2
 song2.next = song3
 song3.next = song4
 song4.next = song2
 
-print(on_repeat(song1))
-    
-"""
-Inputs: head of linked list
-Output: integer (length of the cycle in linked list)
-Constraints: none
-Examples/edge cases: no cycle -> 0
-                     empty list, one node pointing to None -> 0
-
-Plan: 
-    Determine whether or not there is a cycle
-        Initialize two pointers (slow and fast) to determine cycle. If there is no 
-        cycle, return 0
-    
-    Change slow back to head. Increment slow while slow != head to get to the start of 
-    the cycle. Initialize a current pointer and count to go through the cycle and increment 
-    count while current != slow. Return count 
-"""
-
-def loop_length(playlist_head):
-	pass
+print(loop_length(song1))
