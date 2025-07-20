@@ -58,9 +58,8 @@ def sum_stones(stones):
     
     return stones[0] + sum_stones(stones[1:])
 
-print(sum_stones([12, 8, 22, 16, 10]))
-
-print(sum_stones([5, 10, 15, 20, 25, 30]))
+# print(sum_stones([12, 8, 22, 16, 10]))
+# print(sum_stones([5, 10, 15, 20, 25, 30]))
 
 """
 U   
@@ -177,5 +176,32 @@ def strongest_avenger(strengths):
     return first if first >= maxFromRemainingList else maxFromRemainingList
 
 
-print(strongest_avenger([88, 92, 95, 99, 97, 100, 94]))
-print(strongest_avenger([50, 75, 85, 60, 90]))
+# print(strongest_avenger([88, 92, 95, 99, 97, 100, 94]))
+# print(strongest_avenger([50, 75, 85, 60, 90]))
+
+"""
+Input: string (resources)
+Output: integer (represent the total number of distinct vibranium desposits)
+Constraints: Write a recursive function
+
+Plan: Recursively call the function and check if the first character is a V, if it is return 1 + recursive call, otherwise just make a recursive call. The base case is when the string is empty return 0. 
+
+Time and Space Complexity:
+Time: O(n)
+Space: O(n)
+"""
+
+def count_deposits(resources):
+    # base case
+    if len(resources) == 0:
+        return 0
+    
+    firstChar = resources[0]
+    
+    if firstChar == "V":
+        return 1 + count_deposits(resources[1:])
+    else:
+        return count_deposits(resources[1:])
+    
+print(count_deposits("VVVVV"))
+print(count_deposits("VXVYGA"))
