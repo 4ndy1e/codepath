@@ -114,7 +114,7 @@ Problem 4
 Input: integer (integer n - months)
 Output: integer (height)
 
-Time: O(n)
+Time: O(2^n)
 Space: O(n)
 """
 def fibonacci_growth(n):
@@ -124,7 +124,45 @@ def fibonacci_growth(n):
     if n == 1:
         return 1
     
-    return fibonacci_growth(n-1) + fibonacci_growth(n-2)
+    # return fibonacci_growth(n-1) + fibonacci_growth(n-2)
 
-print(fibonacci_growth(5))
-print(fibonacci_growth(8))
+# print(fibonacci_growth(5))
+# print(fibonacci_growth(8))
+
+"""
+Problem 5: 
+Input: integer (n, which represents 4^n)
+Output: integer (4^n)
+"""
+
+def power_of_four(n):
+    if n <= 1 and n >= -1:
+        return 4
+    
+    if n > 1:
+        return 4 * power_of_four(n-1)
+    
+    return 1 / (power_of_four(n+1))
+
+# print(power_of_four(2))
+# print(power_of_four(-2))
+
+"""
+Problem 6
+Input: list (stengths of the avengers)
+Output: integer (max strength)
+Contraints: use recursion
+"""
+
+def strongest_avenger(strengths):
+    if len(strengths) == 1:
+        return strengths[0]
+    
+    first = strengths[0]
+    maxFromRemainingList = strongest_avenger(strengths[1:])
+    
+    return first if first >= maxFromRemainingList else maxFromRemainingList
+
+
+print(strongest_avenger([88, 92, 95, 99, 97, 100, 94]))
+print(strongest_avenger([50, 75, 85, 60, 90]))
