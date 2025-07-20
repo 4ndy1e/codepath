@@ -137,3 +137,45 @@ def find_frequency_positions(transmissions, target_code):
 print(find_frequency_positions([5,7,7,8,8,10], 8))
 print(find_frequency_positions([5,7,7,8,8,10], 6))
 print(find_frequency_positions([], 0))
+
+"""
+input: 
+    - list: characters in lexicogrpahic order 
+    - char: target character we are looking for 
+output: 
+    - char: smallest character that is lexicographically larger than the target
+constraints: 
+    - character has to be alphabetically greater than the target
+    - at least two different characters in the list
+edge cases:
+    - no lixcographically greater characters than the target -> return letter[0]
+
+Match: Divide and Conquer - Binary Search Pattern
+
+Plan: Use a binary search to find the target and adjust the mid point point depending on the alphabetical value of the midpoint character to the target. 
+    - if the midpoint character > target: adjust midpoint to left partition
+    - if the midpoint character <= target: adjust midpoint to the right partition
+"""
+
+def next_greatest_letter(letters, target):
+    left, right = 0, len(letters) - 1
+    mid = (left + right) // 2
+    
+    while left <= right:
+        mid = (left + right) // 2
+        
+        if letters[mid] <= target:
+            # search the right partition
+            left = mid + 1
+        else:
+            # search the left partition
+            right = mid - 1
+            
+    # If low is out of bounds, it means we didn't find a larger element, so wrap around
+    return letters[left % len(letters)]
+
+letters = ['a', 'a', 'b', 'c', 'c', 'c', 'e', 'h', 'w']
+
+print(next_greatest_letter(letters, 'a'))
+print(next_greatest_letter(letters, 'd'))
+print(next_greatest_letter(letters, 'y'))
