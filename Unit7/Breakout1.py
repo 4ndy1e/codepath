@@ -124,7 +124,7 @@ def fibonacci_growth(n):
     if n == 1:
         return 1
     
-    # return fibonacci_growth(n-1) + fibonacci_growth(n-2)
+    return fibonacci_growth(n-1) + fibonacci_growth(n-2)
 
 # print(fibonacci_growth(5))
 # print(fibonacci_growth(8))
@@ -133,6 +133,9 @@ def fibonacci_growth(n):
 Problem 5: 
 Input: integer (n, which represents 4^n)
 Output: integer (4^n)
+
+Time: O(n)
+Space: O(n)
 """
 
 def power_of_four(n):
@@ -152,6 +155,16 @@ Problem 6
 Input: list (stengths of the avengers)
 Output: integer (max strength)
 Contraints: use recursion
+
+Plan: 
+1) Base case: If the list `strengths` has only one element, return that element as the maximum.
+2) Recursive case:
+    a) Call the function recursively on the rest of the list `strengths[1:]`.
+    b) Compare the first element `strengths[0]` with the maximum of the rest of the list.
+    c) Return the larger value.
+    
+Time Complexity: O(n)
+Space Complexity: O(n)
 """
 
 def strongest_avenger(strengths):
