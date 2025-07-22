@@ -48,3 +48,19 @@ ivy2 = TreeNode("Root", TreeNode("Node1", TreeNode("Leaf1")))
 
 print(right_vine(ivy1))
 print(right_vine(ivy2))
+
+"""
+Ivy Cutting II
+Same problem as above, but now recursively
+
+Plan: 
+"""
+
+def right_vine_recursive(root):
+    if root == None:
+        return []
+    
+    return [root.val] + right_vine_recursive(root.right)
+
+print(right_vine_recursive(ivy1))
+print(right_vine_recursive(ivy2))
