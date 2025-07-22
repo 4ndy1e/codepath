@@ -7,6 +7,9 @@ constraints:
 edge cases:
     - empty tree: return []
     - one node: return root 
+    
+Plan: Create an empty list and use a loop to iterate through all the tree's right node's and adding them to
+the list if it is not empty. Once the node is empty, break out of the loop and return the list. 
 """
 
 class TreeNode:
