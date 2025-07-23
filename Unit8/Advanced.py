@@ -123,7 +123,7 @@ Plan: Traverse the tree (in any order) and get the total sum of all node values 
 
 Time and Space Complexity: 
 Time: O(n) - to go through each element in the tree
-Space: O(n) - recursively go through each element of the tree will take space on the call stack
+Space: O(h) - where h is the height of the tree due to the recursive call stack
 """
 
 def sum_inventory(root):
