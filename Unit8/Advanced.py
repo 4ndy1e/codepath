@@ -50,6 +50,7 @@ print(right_vine(ivy1))
 print(right_vine(ivy2))
 
 """
+Problem 2
 Ivy Cutting II
 Same problem as above, but now recursively
 
@@ -64,3 +65,41 @@ def right_vine_recursive(root):
 
 print(right_vine_recursive(ivy1))
 print(right_vine_recursive(ivy2))
+
+"""
+Problem 3
+Pruning Plans 
+
+Input: TreeNode (represents the root of the tree)
+Output: List (values of each node in postorder)
+Constraints: 
+  - postorder traversal
+Edge Cases:
+  - empty tree: return []
+
+Plan: Recursively traverse the tree in postorder and return the first element in addition to a recursive call to the function. 
+
+if root == None: 
+  return []
+  
+recursive call to traverse the left tree (store left subtree values)
+recursive call to traverse the right tree (store right subtree values)
+
+return left_subtree + right_subtree + [root.val]
+"""
+
+def survey_tree(root):
+  if root == None:
+    return []
+  
+  # traverse all the way to the left 
+  left_subtree = survey_tree(root.left)
+  right_subtree = survey_tree(root.right)
+  
+  return left_subtree + right_subtree + [root.val]
+
+magnolia = TreeNode("Root", 
+                TreeNode("Node1", TreeNode("Leaf1")),
+                TreeNode("Node2", TreeNode("Leaf2"), TreeNode("Leaf3")))
+
+print(survey_tree(magnolia))
