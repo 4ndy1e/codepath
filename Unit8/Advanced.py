@@ -86,6 +86,10 @@ recursive call to traverse the left tree (store left subtree values)
 recursive call to traverse the right tree (store right subtree values)
 
 return left_subtree + right_subtree + [root.val]
+
+Time and SpaceComplexity: 
+Time: O(n) - to go through all nodes in a tree
+Space Complexity: O(n) - store all nodes in a list
 """
 
 def survey_tree(root):
@@ -103,3 +107,10 @@ magnolia = TreeNode("Root",
                 TreeNode("Node2", TreeNode("Leaf2"), TreeNode("Leaf3")))
 
 print(survey_tree(magnolia))
+
+"""
+Problem 4
+Sum Inventory
+
+Input: TreeNode (root)
+"""
