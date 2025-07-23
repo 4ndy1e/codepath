@@ -113,4 +113,30 @@ Problem 4
 Sum Inventory
 
 Input: TreeNode (root)
+Output: Integer (sum of all numbers in the tree)
+Constraints:
+  - tree is balanced
+Edge Cases:
+  - tree is empty -> return empty list 
+
+Plan: Traverse the tree (in any order) and get the total sum of all node values in the tree. 
+
+Time and Space Complexity: 
+Time: O(n) - to go through each element in the tree
+Space: O(n) - recursively go through each element of the tree will take space on the call stack
 """
+
+def sum_inventory(root):
+  if root == None:
+    return 0 
+  
+  left_subtree_sum = sum_inventory(root.left)
+  right_subtree_sum = sum_inventory(root.right)
+  
+  return root.val + left_subtree_sum + right_subtree_sum
+
+inventory = TreeNode(40, 
+                    TreeNode(5, TreeNode(20)),
+                            TreeNode(10, TreeNode(1), TreeNode(30)))
+
+print(sum_inventory(inventory))
