@@ -63,8 +63,8 @@ def right_vine_recursive(root):
     
     return [root.val] + right_vine_recursive(root.right)
 
-print(right_vine_recursive(ivy1))
-print(right_vine_recursive(ivy2))
+# print(right_vine_recursive(ivy1))
+# print(right_vine_recursive(ivy2))
 
 """
 Problem 3
@@ -106,7 +106,7 @@ magnolia = TreeNode("Root",
                 TreeNode("Node1", TreeNode("Leaf1")),
                 TreeNode("Node2", TreeNode("Leaf2"), TreeNode("Leaf3")))
 
-print(survey_tree(magnolia))
+# print(survey_tree(magnolia))
 
 """
 Problem 4
@@ -139,4 +139,65 @@ inventory = TreeNode(40,
                     TreeNode(5, TreeNode(20)),
                             TreeNode(10, TreeNode(1), TreeNode(30)))
 
-print(sum_inventory(inventory))
+# print(sum_inventory(inventory))
+
+"""
+input: root (root node of a tree containing numbers and operations)
+output: integer (represents the value of a node, depending on whether or not it's a leaf)
+constraints: 
+  - leaf nodes containing a integer value
+  - non-leaf nodes contain a string of one of the four operations 
+edge cases:
+  - if leaf node -> return value of node 
+  - if non-leaf -> return value of node from applying it's operation on the two leaf nodes 
+  - non-leaf node only contains one leaf node -> perform operation on leaf node and zero 
+  
+Plan: Recursively traverse the list:
+if the current value is a string:
+  return value of the left subtree (operation) value of the right subtree
+  switch(root.val):
+  case '+': return func(root.left) + func(root.right)
+  case '-': return func(root.left) - func(root.right)
+  case '*': return func(root.left) * func(root.right)
+  case '/': return func(root.left) / func(root.right)
+otherwise: 
+  return the number
+  
+Time and Space Complexity: 
+time: O(n) - traversing through each node 
+space: O(h)or O(logn) when balanced - recursive calls on the call stack
+"""
+
+def calculate_yield(root):
+  if isinstance(root.val, str):
+    # check the operation type, then return the proper operation type
+    match root.val:
+      case "+": return calculate_yield(root.left) + calculate_yield(root.right)
+      case "-": return calculate_yield(root.left) - calculate_yield(root.right)
+      case "*": return calculate_yield(root.left) * calculate_yield(root.right)
+      case "/": return calculate_yield(root.left) / calculate_yield(root.right)
+
+  return root.val
+
+"""
+      +
+     / \ 
+    /   \
+   -     *
+  / \   / \
+ 4   2 10  2
+"""
+
+root = TreeNode("+")
+root.left = TreeNode("-")
+root.right = TreeNode("*")
+root.left.left = TreeNode(4)
+root.left.right = TreeNode(2)
+root.right.left = TreeNode(10)
+root.right.right = TreeNode(2)
+
+print(calculate_yield(root))
+
+
+
+
