@@ -188,16 +188,64 @@ def calculate_yield(root):
  4   2 10  2
 """
 
-root = TreeNode("+")
-root.left = TreeNode("-")
-root.right = TreeNode("*")
-root.left.left = TreeNode(4)
-root.left.right = TreeNode(2)
-root.right.left = TreeNode(10)
-root.right.right = TreeNode(2)
+# root = TreeNode("+")
+# root.left = TreeNode("-")
+# root.right = TreeNode("*")
+# root.left.left = TreeNode(4)
+# root.left.right = TreeNode(2)
+# root.right.left = TreeNode(10)
+# root.right.right = TreeNode(2)
 
-print(calculate_yield(root))
+# print(calculate_yield(root))
 
 
+"""
+Input: root 
+Output: list (all leaf nodes of the tree)
 
+Plan: Use recursion to traverse through the tree until the end. If the current node has no children, add it to the list. 
+
+Base Cases:
+if root is None:
+  return []
+  
+if root.left is None and root.right is None:
+  add to the list 
+  
+left = call recursive function on left subtree
+right = call recursive function on right subtree
+
+return left + right
+"""
+
+def get_most_specific(root):
+  # base case
+  if root == None:
+    return []
+  
+  if root.left == None and root.right == None:
+    return [root.val]
+  
+  left = get_most_specific(root.left)
+  right = get_most_specific(root.right)
+  
+  return left + right
+
+"""
+           Plantae
+          /       \
+         /         \
+        /           \ 
+Non-flowering     Flowering
+   /      \       /        \
+Mosses   Ferns Gymnosperms Angiosperms
+                             /     \
+                        Monocots  Dicots
+"""
+plant_taxonomy = TreeNode("Plantae", 
+                          TreeNode("Non-flowering", TreeNode("Mosses"), TreeNode("Ferns")),
+                                  TreeNode("Flowering", TreeNode("Gymnosperms"), 
+                                          TreeNode("Angiosperms", TreeNode("Monocots"), TreeNode("Dicots"))))
+
+print(get_most_specific(plant_taxonomy))
 
