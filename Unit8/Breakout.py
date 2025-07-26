@@ -133,5 +133,57 @@ def right_vine_recursively(root):
     
     return [root.val] + right_vine_recursively(root.right)
     
-print(right_vine_recursively(ivy1))
-print(right_vine_recursively(ivy2))
+# print(right_vine_recursively(ivy1))
+# print(right_vine_recursively(ivy2)(
+
+"""
+U
+    I - root (of an acorn tree)
+    O - int (number of leaves on the tree)
+    C - leaf has no children
+    E - root -> 1
+
+P: Traverse through the tree recursively to determine the number of leaves
+
+Base case:
+if not root: return 0
+
+if not root.left and not root.right: return 1
+
+return 0 + survey_tree(root.left) + survey_tree(root.right).
+
+Time: O(n)
+Space: O(log n) on the call stack
+"""
+def count_leaves(root):
+    if not root:
+        return 0
+
+    if not root.left and not root.right:
+        return 1
+
+    return 0 + count_leaves(root.left) + count_leaves(root.right)
+
+"""
+        Root
+      /      \
+    Node1    Node2
+  /         /    \
+Leaf1    Leaf2  Leaf3
+"""
+
+oak1 = TreeNode("Root", 
+                TreeNode("Node1", TreeNode("Leaf1")),
+                TreeNode("Node2", TreeNode("Leaf2"), TreeNode("Leaf3")))
+
+"""
+      Root
+      /  
+    Node1
+    /
+  Leaf1  
+"""
+oak2 = TreeNode("Root", TreeNode("Node1", TreeNode("Leaf1")))
+
+# print(count_leaves(oak1))
+# print(count_leaves(oak2))
