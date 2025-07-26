@@ -187,3 +187,46 @@ oak2 = TreeNode("Root", TreeNode("Node1", TreeNode("Leaf1")))
 
 # print(count_leaves(oak1))
 # print(count_leaves(oak2))
+
+"""
+Input: root node 
+Output: list (node values in post order)
+Constraints:
+    - tree is balanced
+    - post order 
+Edge Cases:
+    - only root -> return root 
+
+Plan: use post order traversal and add nodes to list and return them recursively. 
+
+Base Case
+if root == None:
+    return []
+    
+left = survey_tree(root.left)
+right = survey_tree(root.right)
+
+return left + right + [root.val]
+"""
+def survey_tree(root):
+    if root == None:
+        return []
+    
+    left = survey_tree(root.left)
+    right = survey_tree(root.right)
+
+    return left + right + [root.val] 
+
+"""
+        Root
+      /      \
+    Node1    Node2
+  /         /    \
+Leaf1    Leaf2  Leaf3
+"""
+
+magnolia = TreeNode("Root", 
+                TreeNode("Node1", TreeNode("Leaf1")),
+                TreeNode("Node2", TreeNode("Leaf2"), TreeNode("Leaf3")))
+
+print(survey_tree(magnolia))
