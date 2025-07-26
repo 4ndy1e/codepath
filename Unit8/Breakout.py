@@ -102,5 +102,36 @@ ivy1 = TreeNode("Root",
 """
 ivy2 = TreeNode("Root", TreeNode("Node1", TreeNode("Leaf1")))
 
-print(right_vine(ivy1))
-print(right_vine(ivy2))
+# print(right_vine(ivy1))
+# print(right_vine(ivy2))
+"""
+Input: root node of the tree
+Output: list (represents nodes of the rightmost vine)
+Constraints: 
+    - list only contains node values from the rightmost vine
+    - recursive
+Edge: 
+    - only root node -> [root]
+    - no right subtree -> [root]
+    
+Plan: Use recursion to traverse the tree and add the node values to a list. 
+
+Base Case
+if root == None:
+    return []
+    
+return [root.val] + right_vine_recursively(root.right)
+
+Time and Space Complexity:
+time - O(log n)
+space - O(log n)
+"""
+def right_vine_recursively(root):
+    # base case 
+    if root == None:
+        return []
+    
+    return [root.val] + right_vine_recursively(root.right)
+    
+print(right_vine_recursively(ivy1))
+print(right_vine_recursively(ivy2))
