@@ -253,3 +253,13 @@ plant_taxonomy = TreeNode("Plantae",
 
 print(get_most_specific(plant_taxonomy))
 
+"""
+Input: root
+Output: integer (representing the number of trees with an age > threshold)
+Constraints:
+  - tree age has to be > threshold to be counted
+Edge Cases:
+  - no nodes > threshold: return 0
+  
+Plan: 
+"""
