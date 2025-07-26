@@ -49,5 +49,58 @@ def calculate_yield(root):
         case("*"): return root.left.val * root.right.val
         case("/"): return root.left.val / root.right.val
 
-apple_tree = TreeNode("+", TreeNode(7), TreeNode(5))
-print(calculate_yield(apple_tree))
+# apple_tree = TreeNode("+", TreeNode(7), TreeNode(5))
+# print(calculate_yield(apple_tree
+
+"""
+U
+    I - root (of an ivy plant)
+    O - list of nodes (from root to rightmost node)
+    C - none
+    E - only root -> [root]
+      - there is no root.right -> [root]
+
+P:
+    HL: Initialize a right_leaves array.
+    Initialize right_pointer = root
+    While right_pointer:
+        right_leaves.append(right_pointer.val)
+        right_pointer = right_pointer.right
+
+    return right_leaves
+
+Time: O(log n)
+Space: O(log n)
+"""
+
+def right_vine(root):
+    right_leaves, right_pointer = [], root
+
+    while right_pointer:
+        right_leaves.append(right_pointer.val)
+        right_pointer = right_pointer.right
+
+    return right_leaves
+
+"""
+        Root
+      /      \
+    Node1    Node2
+  /         /    \
+Leaf1    Leaf2  Leaf3
+"""
+ivy1 = TreeNode("Root", 
+                TreeNode("Node1", TreeNode("Leaf1")),
+                TreeNode("Node2", TreeNode("Leaf2"), TreeNode("Leaf3")))
+
+"""
+      Root
+      /  
+    Node1
+    /
+  Leaf1  
+"""
+ivy2 = TreeNode("Root", TreeNode("Node1", TreeNode("Leaf1")))
+
+print(right_vine(ivy1))
+print(right_vine(ivy2))
