@@ -216,6 +216,10 @@ left = call recursive function on left subtree
 right = call recursive function on right subtree
 
 return left + right
+
+Time and Space complexity:
+time: O(n) - to go through each node and perform the checks
+space: O(h) - recursive calls stored on the call stack
 """
 
 def get_most_specific(root):
