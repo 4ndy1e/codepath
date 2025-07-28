@@ -229,4 +229,180 @@ magnolia = TreeNode("Root",
                 TreeNode("Node1", TreeNode("Leaf1")),
                 TreeNode("Node2", TreeNode("Leaf2"), TreeNode("Leaf3")))
 
-print(survey_tree(magnolia))
+# print(survey_tree(magnolia))
+
+
+
+"""
+Day 2
+"""
+
+from collections import deque 
+
+# Tree Node class
+class TreeNode:
+    def __init__(self, value, key=None, left=None, right=None):
+        self.key = key
+        self.val = value
+        self.left = left
+        self.right = right
+
+def build_tree(values):
+    if not values:
+        return None
+
+    def get_key_value(item):
+        if isinstance(item, tuple):
+            return item[0], item[1]
+        else:
+            return None, item
+
+    key, value = get_key_value(values[0])
+    root = TreeNode(value, key)
+    queue = deque([root])
+    index = 1
+
+    while queue:
+        node = queue.popleft()
+        if index < len(values) and values[index] is not None:
+            left_key, left_value = get_key_value(values[index])
+            node.left = TreeNode(left_value, left_key)
+            queue.append(node.left)
+        index += 1
+        if index < len(values) and values[index] is not None:
+            right_key, right_value = get_key_value(values[index])
+            node.right = TreeNode(right_value, right_key)
+            queue.append(node.right)
+        index += 1
+
+    return root
+
+"""
+U 
+    I - binary search root (each node is (key, val))
+    O - sorted array of (key, val) part 
+    C - do an inorder traversal
+    E - no root -> []
+
+P
+    HL: Traverse the left subtree until the node is None. Append (key,val)
+    to an array. Then, traverse to the right subtree.
+
+    Pseudocode: Initialize plants_arr = []
+    current, stack= collections, []
+
+    while stack or current:
+        while current:
+            stack.append(current)
+            current = current.left
+        current = stack.pop()
+        plants_arr.append((current.key, current.val))
+        current = current.right
+    
+    return plants_arr
+
+    Time: O(n squared)
+    Space: O(n)
+"""
+def sort_plants(collection):
+    plants_arr = []
+    current, stack = collection, []
+
+    while stack or current:
+        while current:
+            stack.append(current)
+            current = current.left
+        current = stack.pop()
+        plants_arr.append((current.key, current.val))
+        current = current.right
+    
+    return plants_arr
+
+
+"""
+         (3, "Monstera")
+        /               \
+   (1, "Pothos")     (5, "Witchcraft Orchid")
+        \                 /
+  (2, "Spider Plant")   (4, "Hoya Motoskei")
+"""
+
+# Using build_tree() function at the top of page
+values = [(3, "Monstera"), (1, "Pothos"), (5, "Witchcraft Orchid"), None, (2, "Spider Plant"), (4, "Hoya Motoskei")]
+collection = build_tree(values)
+
+# print(sort_plants(collection))
+
+
+"""
+Input: root (containing flower names in alphabetical order)
+Output: bool (indicates whether or not hte flower name is in the tree)
+Constraints: 
+    - tree is in alphabetical order
+Edge Cases:
+    -
+    
+Plan: Use recursion to traverse through the tree and return a boolean based on whether or not the current node is equal to the flower's name. 
+
+Base Case:
+if inventory is None:
+    return False
+
+if inventory.val == name:
+    return True
+    
+return find_flower(inventory.left, name) or find_flower(inventory.right, name)
+"""
+def find_flower(inventory, name):
+    # base case
+    if inventory is None:
+        return False
+    
+    if inventory.val == name:
+        return True
+    
+    # recurisve calls 
+    return find_flower(inventory.left, name) or find_flower(inventory.right, name)
+
+"""
+         Rose
+        /    \
+      Lily   Tulip
+     /  \       \
+  Daisy  Lilac  Violet
+"""
+
+# using build_tree() function at top of page
+values = ["Rose", "Lily", "Tulip", "Daisy", "Lilac", None, "Violet"]
+garden = build_tree(values)
+
+# print(find_flower(garden, "Lilac"))  
+# print(find_flower(garden, "Sunflower")) 
+
+
+
+
+def add_plant(collection, name):
+    if collection is None:
+        return TreeNode(name)
+    
+    if name < collection.val:
+        collection.left = add_plant(collection.left, name)
+    else: 
+        collection.right = add_plant(collection.right, name)
+    
+    return collection
+
+"""
+            Money Tree
+        /              \
+Fiddle Leaf Fig    Snake Plant
+"""
+
+# Using build_tree() function at the top of page
+values = ["Money Tree", "Fiddle Leaf Fig", "Snake Plant"]
+collection = build_tree(values)
+
+# Using print_tree() function at the top of page
+print_tree(add_plant(collection, "Aloe"))
+
