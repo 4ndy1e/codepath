@@ -122,3 +122,69 @@ order2 = build_tree(cookies2)
 
 # Using print_tree() function included at top of page
 print_tree(merge_orders(order1, order2))
+
+"""
+Problem 2
+Input: root 
+Output: print list of flavors (vals) in level order from left to right
+Constraints:
+    - level order from left to right
+
+Plan: Use a BFS to explore the nodes level by level from left to right
+
+If tree is empty:
+    return tree
+    
+instantiate a queue to store our nodes in the order to be visited 
+instantiate a list for nodes that have been visited 
+
+add root to the queue
+
+while queue:
+    pop off the queue 
+    add the node to visited 
+    
+    add the popped node's left child to the queue
+    add the popped node's right child to the queue
+    
+return list of nodes that have been visited
+"""
+
+class Puff():
+     def __init__(self, flavor, left=None, right=None):
+        self.val = flavor
+        self.left = left
+        self.right = right
+
+def print_design(root):
+    if not root:
+        return root
+    
+    queue = deque()
+    visited = []
+    
+    queue.append(root)
+    
+    while queue:
+        currentNode = queue.popleft()
+        visited.append(currentNode.val)
+        
+        if currentNode.left:
+            queue.append(currentNode.left)
+        if currentNode.right:
+            queue.append(currentNode.right)
+            
+    print(visited)
+
+"""
+            Vanilla
+           /       \
+      Chocolate   Strawberry
+      /     \
+  Vanilla   Matcha  
+"""
+croquembouche = Puff("Vanilla", 
+                    Puff("Chocolate", Puff("Vanilla"), Puff("Matcha")), 
+                    Puff("Strawberry"))
+
+print_design(croquembouche)
