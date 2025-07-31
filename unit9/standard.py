@@ -148,6 +148,10 @@ while queue:
     add the popped node's right child to the queue
     
 return list of nodes that have been visited
+
+Time and Space Complexity:
+Time - O(n): go through each element level by level
+Space - O(n): store the visited nodes to return back
 """
 
 class Puff():
