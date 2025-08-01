@@ -205,10 +205,10 @@ Base Case:
 if root is None:
     return 0
     
-left = dfs(root.left)
-right = dfs(root.right)
+recursively calculate the depth of the left subtree
+recursively calculate the depth of the right subtree
 
-return max(left, right) + 1
+return the greater of the two depths plus one for the current node level
 
 Time and Space Complexity:
 Time: O(N) - go through each element in the tree to determine the longest path
@@ -239,3 +239,40 @@ def max_tiers_dfs(root):
 # cake = build_tree(cake_sections)
 
 # print(max_tiers_dfs(cake))
+
+"""
+Problem 4: recreate the same problem as above using bfs instead
+
+Time and Space Complexity:
+Time: O(n) - traversing through each node in the tree 
+Space: O(n) - queue storing nodes for each node when traversing through levels
+"""
+
+def max_tiers_bfs(root):
+    if not root:
+        return 0
+    
+    queue = deque()
+    queue.append(root)
+    
+    tiers = 0
+    
+    while queue:
+        currentLevelLen = len(queue)
+        
+        for i in range(currentLevelLen):
+            currentNode = queue.popleft()
+            
+            if currentNode.left:
+                queue.append(currentNode.left)
+            if currentNode.right:
+                queue.append(queue)
+            
+            tiers += 1
+            
+    return tiers
+
+cake_sections = ["Chocolate", "Vanilla", "Strawberry", None, None, "Chocolate", "Coffee"]
+cake = build_tree(cake_sections)
+
+print(max_tiers_dfs(cake))
