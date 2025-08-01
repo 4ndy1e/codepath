@@ -121,7 +121,7 @@ order1 = build_tree(cookies1)
 order2 = build_tree(cookies2)
 
 # Using print_tree() function included at top of page
-print_tree(merge_orders(order1, order2))
+# print_tree(merge_orders(order1, order2))
 
 """
 Problem 2
@@ -187,8 +187,55 @@ def print_design(root):
       /     \
   Vanilla   Matcha  
 """
-croquembouche = Puff("Vanilla", 
-                    Puff("Chocolate", Puff("Vanilla"), Puff("Matcha")), 
-                    Puff("Strawberry"))
+# croquembouche = Puff("Vanilla", 
+#                     Puff("Chocolate", Puff("Vanilla"), Puff("Matcha")), 
+#                     Puff("Strawberry"))
 
-print_design(croquembouche)
+# print_design(croquembouche)
+
+"""
+Input: root
+Output: integer (maximum number of tiers in your cake)
+Edge Cases:
+    - empty root -> return 0
+
+Plan: Use a DFS to find the longest path in the tree and explore each nodes left and right subtrees until none
+
+Base Case:
+if root is None:
+    return 0
+    
+left = dfs(root.left)
+right = dfs(root.right)
+
+return max(left, right) + 1
+
+Time and Space Complexity:
+Time: O(N) - go through each element in the tree to determine the longest path
+Space: O(h) - recursive calls on the call stack
+"""
+
+def max_tiers_dfs(root):
+    # base case
+    if not root:
+        return 0
+    
+    # search
+    left = max_tiers_dfs(root.left)
+    right = max_tiers_dfs(root.right)
+    
+    # return values
+    return max(left, right) + 1
+
+"""
+        Chocolate
+        /        \
+    Vanilla    Strawberry
+                /     \
+         Chocolate    Coffee
+"""
+# Using build_tree() function included at top of page
+# cake_sections = ["Chocolate", "Vanilla", "Strawberry", None, None, "Chocolate", "Coffee"]
+# cake = build_tree(cake_sections)
+
+# print(max_tiers_dfs(cake))
