@@ -272,7 +272,56 @@ def max_tiers_bfs(root):
             
     return tiers
 
-cake_sections = ["Chocolate", "Vanilla", "Strawberry", None, None, "Chocolate", "Coffee"]
-cake = build_tree(cake_sections)
+# cake_sections = ["Chocolate", "Vanilla", "Strawberry", None, None, "Chocolate", "Coffee"]
+# cake = build_tree(cake_sections)
 
-print(max_tiers_dfs(cake))
+# print(max_tiers_dfs(cake))
+
+"""
+Input: root (represents the inventory)
+Output: boolean (represents if an order can be fulfilled)
+Constraints:  
+    - root-to-leaf path such that adding up all values alonmg the path = order_size
+Edge Case:
+    - empty root -> false
+    - one node -> return true if it is a leaf node and equal to order_size
+    
+Plan: Use a DFS to go down each branch of the tree and determine whether or not the current sum when traversing
+though the branch is equal to the order_size or not. If it is, return True, if not, it will go all the way to
+the end of the branch and return False. 
+
+Base Case:
+if root is None:
+    return False
+    
+if root.val == order_size and not root.left and not root.right:
+    return True
+    
+subtract the current root value from the order size
+
+recursive call to the left subtree until base case is satisfied
+recursive call to the right subtree until basecase is satisfied
+
+return left or right 
+
+Time and Space Complexity:
+Time: O(n) - go through each node using a dfs traversal
+Space: O(n) - recursive calls to the function on the call stack
+"""
+
+def can_fulfill_order(root, order_size):
+    if not root:
+        return False
+    
+    if root.val == order_size and not root.left and not root.right:
+        return True
+    
+    newOrderSize = order_size - root.val
+    
+    return can_fulfill_order(root.left, newOrderSize) or can_fulfill_order(root.right, newOrderSize)
+
+quantities = [5,4,8,11,None,13,4,7,2,None,None,None,1]
+baked_goods = build_tree(quantities)
+
+print(can_fulfill_order(baked_goods, 22))
+print(can_fulfill_order(baked_goods, 2))
