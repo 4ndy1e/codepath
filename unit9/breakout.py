@@ -193,6 +193,9 @@ P
     HL: Base case: if not root: return 0
 
     return 1 + min(min_depth(root.left), min_depth(root.right))
+
+Time: O(n) 
+Space: O(n) - on the call stack
 """
 def min_depth(door):
     if not door:
@@ -203,4 +206,61 @@ def min_depth(door):
 
 door = Room("Door", Room("Attic"), Room("Cursed Room", Room("Crypt"), Room("Haunted Cellar")))
 
-print(min_depth(door))
+# print(min_depth(door))
+
+"""
+Plan: Use BFS to find the minimum dpeth of the secret path by visited the tree level by level from left to right. 
+
+Base Case:
+if root is empty:
+    return 0
+
+queue = deque()
+queue.append(root)
+
+depth = 1
+
+while queue:
+    currentNode = queue.popleft()
+    
+    if currentNode does not have a left and right child (leaf node):
+        break
+    if currentNode.left:
+        add to the queue
+    if current.right:
+        add to the queue
+        
+    depth += 1
+
+return depth
+
+Time and Space Complexity:
+Time - O(n): worse case, we got through all nodes
+Space - O(n): O(n/2) = O(n)
+"""
+
+def min_depth_bfs(root):
+    if not root:
+        return 0
+    
+    queue = deque()
+    queue.append(root)
+    
+    depth = 1
+    
+    while queue:
+        currentNode = queue.popleft()
+        
+        if not currentNode.left and not currentNode.right:
+            break
+        if currentNode.left:
+            queue.append(currentNode.left)    
+        if currentNode.right:
+            queue.append(currentNode.right)
+            
+        depth += 1
+        
+    return depth
+
+
+print(min_depth_bfs(door))
