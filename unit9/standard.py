@@ -241,6 +241,7 @@ def max_tiers_dfs(root):
 # print(max_tiers_dfs(cake))
 
 """
+Maximum Depth of Binary Tree
 Problem 4: recreate the same problem as above using bfs instead
 
 Time and Space Complexity:
@@ -278,6 +279,7 @@ def max_tiers_bfs(root):
 # print(max_tiers_dfs(cake))
 
 """
+Path Sum
 Input: root (represents the inventory)
 Output: boolean (represents if an order can be fulfilled)
 Constraints:  
