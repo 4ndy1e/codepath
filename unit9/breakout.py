@@ -262,5 +262,78 @@ def min_depth_bfs(root):
         
     return depth
 
+# print(min_depth_bfs(door))
 
-print(min_depth_bfs(door))
+"""
+U
+    I - 2D array 
+    O - root of a binary tree
+    C - none
+    E - [] -> None
+
+P
+    HL: Create a node dictionary (node_dict) and a child_set to store the parent and children
+
+    for parent, child, is_left in descriptions:
+        if parent not in node_dict:
+            node_dict[parent] = TreeNode(parent)
+        if child not in node_dict:
+            node_dict[child] = TreeNode(child)
+
+        child_set.add(child)
+
+        if is_left == 1:
+            node_dict[parent].left = node_dict[child]
+        else:
+            node_dict[parent].right = node_dict[child]
+
+        Initialize root as None
+        for parent in node:
+            if parent not in child_set:
+                root = node_dict[parent]
+                break
+
+        return root
+
+    Time: O(n)
+    Space: O(n)??
+    
+"""
+def build_cookie_tree(descriptions):
+    node_dict, child_set = {}, set()
+
+    for parent, child, is_left in descriptions:
+        if parent not in node_dict:
+            node_dict[parent] = TreeNode(parent)
+        if child not in node_dict:
+            node_dict[child] = TreeNode(child)
+
+        child_set.add(child)
+
+        if is_left == 1:
+            node_dict[parent].left = node_dict[child]
+        else:
+            node_dict[parent].right = node_dict[child]
+
+    root = None
+    for parent in node_dict:
+        if parent not in child_set:
+            root = node_dict[parent]
+            break
+
+    return root
+
+descriptions1 = [
+    ["Chocolate Chip", "Peanut Butter", 1],
+    ["Chocolate Chip", "Oatmeal Raisin", 0],
+    ["Peanut Butter", "Sugar", 1]
+]
+
+descriptions2 = [
+    ["Ginger Snap", "Snickerdoodle", 0],
+    ["Ginger Snap", "Shortbread", 1]
+]
+
+# Using print_tree() function included at top of page
+print_tree(build_cookie_tree(descriptions1))
+print_tree(build_cookie_tree(descriptions2))
