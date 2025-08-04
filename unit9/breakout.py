@@ -371,15 +371,19 @@ Space: O(n) - worse case of where a tree is skewed or unbalanced, will result in
 def count_cookie_paths(root, targetSum):
     if not root:
         return 0
-    if root.val == targetSum and not root.left and not root.right:
-        return 1
     
-    newSum = targetSum - root.val
+    def dfs(root, currentSum):
+        if not root:
+            return 0
+        
+        currentSum += root.val
+        
+        if currentSum == targetSum and not root.left and not root.right:
+            return 1
+        
+        return dfs(root.left, currentSum) + dfs(root.right, currentSum)
     
-    left = count_cookie_paths(root.left, newSum)
-    right = count_cookie_paths(root.right, newSum)
-    
-    return left + right
+    return dfs(root, 0)
 
 """
     10
