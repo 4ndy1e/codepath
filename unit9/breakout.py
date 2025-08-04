@@ -337,3 +337,70 @@ descriptions2 = [
 # Using print_tree() function included at top of page
 print_tree(build_cookie_tree(descriptions1))
 print_tree(build_cookie_tree(descriptions2))
+
+"""
+Input: root, targetSum
+Output: integer (represents how many root to leaf paths = targetSum)
+Edge Cases:
+    - empty root -> 0
+    - one root -> return 1 if root.val = targetSum and it is a leaf node
+
+Plan: Use a DFS to traverse through each branch in the tree and update the targetSum with each recursive call. 
+The new sum will be targetSum - root.val each call. We know a path is valid when the last recursive call has the targetSum == root.val
+
+Psuedo Code:
+Base Case:
+if root is empty:
+    return 0
+if root is a leaf node and equal to targetSum:
+    return 1
+    
+Recursive Case:
+newSum = targetSum - root.val
+
+Call recusrive function on root.left and newSum
+Call recusrive function on root.right and newSum
+
+return left + right
+
+Time and Space Complexity:
+Time: O(n) - go through all nodes in the tree 
+Space: O(n) - worse case of where a tree is skewed or unbalanced, will result in n recusrive calls on the call stack
+"""
+
+def count_cookie_paths(root, targetSum):
+    if not root:
+        return 0
+    if root.val == targetSum and not root.left and not root.right:
+        return 1
+    
+    newSum = targetSum - root.val
+    
+    left = count_cookie_paths(root.left, newSum)
+    right = count_cookie_paths(root.right, newSum)
+    
+    return left + right
+
+"""
+    10
+   /  \
+  5     8
+ / \   / \
+3   7 12  4
+"""
+# Using build_tree() function included at the top of the page
+cookie_nums = [10, 5, 8, 3, 7, 12, 4]
+cookies1 = build_tree(cookie_nums)
+
+"""
+    8
+   / \
+  4   12
+ / \    \
+2   6    10
+"""
+cookie_nums = [8, 4, 12, 2, 6, None, 10]
+cookies2 = build_tree(cookie_nums)
+
+print(count_cookie_paths(cookies1, 22)) 
+print(count_cookie_paths(cookies2, 14)) 
