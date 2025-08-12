@@ -22,6 +22,8 @@ Constraints:
     - all flights must have a connected fligt back to it's current node
 Edge Cases:
     - empty flights -> True
+    
+Plan: Iterate through each flight and check if the current flight number is in the flight list of any other flights or not. If not, return False. 
 """
 
 def bidirectional_flights(flights):
@@ -37,5 +39,35 @@ def bidirectional_flights(flights):
 flights1 = [[1, 2], [0], [0, 3], [2]]
 flights2 = [[1, 2], [], [0], [2]]
 
-print(bidirectional_flights(flights1))
-print(bidirectional_flights(flights2))
+# print(bidirectional_flights(flights1))
+# print(bidirectional_flights(flights2))
+
+"""
+Problem 3: Finding Direct Flights
+Input: 2D array (of size n x n ), integer (source)
+Output: list (of all destinations the customer can reach from the source)
+Constraints:
+    - n[i][j] = 1 indicates that there is a flight from i to j
+    - n[i][j] = 0 indicates that there is not a flight from i to j
+
+Plan: Since this an adjacency list, look for the list of flights for flight number (source). For each flight in the list, if it is 1, we know it is a connected flight, so append it to a result list and return the list
+"""
+
+def get_direct_flights(flights, source):
+    sourceFlightConnections = flights[source]
+    results = []
+    
+    for flightNumber in range(len(sourceFlightConnections)):
+        if sourceFlightConnections[flightNumber] == 1:
+            results.append(flightNumber)
+            
+    return results
+
+flights = [
+            [0, 1, 1, 0],
+            [1, 0, 0, 0],
+            [1, 1, 0, 1],
+            [0, 0, 0, 0]]
+
+print(get_direct_flights(flights, 2))
+print(get_direct_flights(flights, 3))
