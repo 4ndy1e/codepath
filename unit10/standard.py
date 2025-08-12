@@ -10,9 +10,9 @@ flights = {
     "ATL" : ["DFW"]
 }
 
-print(list(flights.keys()))
-print(list(flights.values()))
-print(flights["JFK"])
+# print(list(flights.keys()))
+# print(list(flights.values()))
+# print(flights["JFK"])
 
 """
 Problem 2: There and back
@@ -69,5 +69,35 @@ flights = [
             [1, 1, 0, 1],
             [0, 0, 0, 0]]
 
-print(get_direct_flights(flights, 2))
-print(get_direct_flights(flights, 3))
+# print(get_direct_flights(flights, 2))
+# print(get_direct_flights(flights, 3))
+
+"""
+Problem 4: Converting Flgiht Representations
+Input: list of edges 
+Output: dict (representing the list of edges graph as a adjacency dict)
+Constraints:
+    - flight[i] = [a,b] where there is bidirectional flight between a and b
+
+Plan: Iterate through the list of edges and add b to a's values and a to b's values in the dict. Define the dict with a default value of empty lists
+"""
+
+from collections import defaultdict
+
+def get_adj_dict(flights):
+    flightsDict = {}
+    
+    for flight1, flight2 in flights:
+        if flight1 not in flightsDict:
+            flightsDict[flight1] = []
+        if flight2 not in flightsDict:
+            flightsDict[flight2] = []
+        
+        flightsDict[flight1].append(flight2)
+        flightsDict[flight2].append(flight1)
+        
+    return flightsDict
+
+flights = [['Cape Town', 'Addis Ababa'], ['Cairo', 'Lagos'], ['Lagos', 'Addis Ababa'], 
+            ['Nairobi', 'Cairo'], ['Cairo', 'Cape Town']]
+print(get_adj_dict(flights))
