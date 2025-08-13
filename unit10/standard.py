@@ -115,11 +115,16 @@ values of the dict is n-1, we know it can be a center. Return the highest number
 """
 
 def find_center(terminals):
-    flightsDict = get_adj_dict(terminals)
+    flightCountDict = {}
+    
+    for flight1, flight2 in terminals:
+        flightCountDict[flight1] = flightCountDict.get(flight1, 0) + 1
+        flightCountDict[flight2] = flightCountDict.get(flight2, 0) + 1
+    
     centerFlightNumber = -1
     
-    for flightNumber, flightConnectionsList in flightsDict.items():
-        if len(flightConnectionsList) == len(flightsDict)-1:
+    for flightNumber, flightsCount in flightCountDict.items():
+        if flightsCount == len(flightCountDict) - 1:
             centerFlightNumber = max(centerFlightNumber, flightNumber)
             
     return centerFlightNumber
