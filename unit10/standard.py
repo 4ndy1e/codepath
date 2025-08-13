@@ -101,3 +101,31 @@ def get_adj_dict(flights):
 flights = [['Cape Town', 'Addis Ababa'], ['Cairo', 'Lagos'], ['Lagos', 'Addis Ababa'], 
             ['Nairobi', 'Cairo'], ['Cairo', 'Cape Town']]
 print(get_adj_dict(flights))
+
+"""
+Problem 5: Find Center of Airport
+Input: list of edges ([i,j] where i to j is bidirectional)
+Output: Integer (node that is the center of the graph, aka is connected to n-1 nodes)
+Edge Cases:
+    - there is only one node -> return node
+    - there are two nodes and both are connected -> return node that is highest
+    
+Plan: Iterate through the list of edges and convert the list ot a adjacaency dict. If the list length of the 
+values of the dict is n-1, we know it can be a center. Return the highest number center. 
+"""
+
+def find_center(terminals):
+    flightsDict = get_adj_dict(terminals)
+    centerFlightNumber = -1
+    
+    for flightNumber, flightConnectionsList in flightsDict.items():
+        if len(flightConnectionsList) == len(flightsDict)-1:
+            centerFlightNumber = max(centerFlightNumber, flightNumber)
+            
+    return centerFlightNumber
+
+terminals1 = [[1,2],[2,3],[4,2]]
+terminals2 = [[1,2],[5,1],[1,3],[1,4]]
+
+print(find_center(terminals1))
+print(find_center(terminals2))
