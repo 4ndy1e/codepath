@@ -146,7 +146,9 @@ Once the BFS is over, every node that is accessible from the starting node will 
 Psuedo Code:
 
 Create a queue with the starting destination in it. (queue to represent the nodes we want to traverse into next)
-Create a list to represent the visited destination (nodes)
+Crate a set to keep track of visited nodes
+
+Create a list to represent the reachable destination (nodes)
 
 while queue is not empty:
     currentDestination = queue.popleft()
@@ -155,7 +157,7 @@ while queue is not empty:
     look up the current node in the dict to find it's list of destinations. 
     loop through the currentDestination's list of desintations and add it to the queue if it has not been visited. 
     
-return visited list
+return reachable destinations
 """
 
 from collections import deque
@@ -163,19 +165,56 @@ from collections import deque
 def get_all_destinations(flights, start):
     queue = deque()
     queue.append(start)
+    visited = set()
     
-    visited = []
+    reachable = []
     
     while queue:
         currentDestination = queue.popleft()
-        visited.append(currentDestination)
         
-        flightConnections = flights[currentDestination]
+        visited.add(currentDestination)
+        reachable.append(currentDestination)
         
-        for destination in flightConnections:
+        for destination in flights.get(currentDestination, []):
             if destination not in visited:
                 queue.append(destination)
             
+    return reachable
+
+# flights = {
+#     "Tokyo": ["Sydney"],
+#     "Sydney": ["Tokyo", "Beijing"],
+#     "Beijing": ["Mexico City", "Helsinki"],
+#     "Helsinki": ["Cairo", "New York"],
+#     "Cairo": ["Helsinki", "Reykjavik"],
+#     "Reykjavik": ["Cairo", "New York"],
+#     "Mexico City": ["Sydney"],
+#     "New York": []   
+# }
+
+# print(get_all_destinations(flights, "Beijing"))
+# print(get_all_destinations(flights, "Helsinki"))
+
+"""
+Problem 7: Find All Reachable Destinations using DFS
+Same question as above but using DFS
+"""
+
+def get_all_destinations_dfs(flights, start):
+    visited = []
+    
+    def dfs_helper(start_node, visited):
+        if start_node in visited:
+            return
+
+        visited.append(start_node)
+        
+        neigborList = flights.get(start_node, [])
+        
+        for neigbor in neigborList:
+            dfs_helper(neigbor, visited)
+    
+    dfs_helper(start, visited)
     return visited
 
 flights = {
@@ -185,8 +224,7 @@ flights = {
     "Helsinki": ["Cairo", "New York"],
     "Cairo": ["Helsinki", "Reykjavik"],
     "Reykjavik": ["Cairo", "New York"],
-    "Mexico City": ["Sydney"],
-    "New York": []   
+    "Mexico City": ["Sydney"]   
 }
 
 print(get_all_destinations(flights, "Beijing"))
