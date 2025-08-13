@@ -100,7 +100,7 @@ def get_adj_dict(flights):
 
 flights = [['Cape Town', 'Addis Ababa'], ['Cairo', 'Lagos'], ['Lagos', 'Addis Ababa'], 
             ['Nairobi', 'Cairo'], ['Cairo', 'Cape Town']]
-print(get_adj_dict(flights))
+# print(get_adj_dict(flights))
 
 """
 Problem 5: Find Center of Airport
@@ -132,8 +132,8 @@ def find_center(terminals):
 terminals1 = [[1,2],[2,3],[4,2]]
 terminals2 = [[1,2],[5,1],[1,3],[1,4]]
 
-print(find_center(terminals1))
-print(find_center(terminals2))
+# print(find_center(terminals1))
+# print(find_center(terminals2))
 
 """
 Problem 6: Finding All Reachable Destinations
@@ -227,6 +227,61 @@ flights = {
     "Mexico City": ["Sydney"]   
 }
 
-print(get_all_destinations(flights, "Beijing"))
-print(get_all_destinations(flights, "Helsinki"))
+# print(get_all_destinations(flights, "Beijing"))
+# print(get_all_destinations(flights, "Helsinki"))
 
+"""
+Input: list of edges (boarding_passes[i] = (departure, arrival))
+Output: list (airports we will pass through in the order visited.)
+
+Plan: Create a dict mapping the departure airport to it's arrival airport. The starting airport is the airport that is not the in dict values and the ending airport is the airport 
+that is not in the dict keys.
+
+Time: O(E) - for mapping the list of edges to a dict 
+Space: O(E) - for using a hashmap and a list to store the values
+"""
+
+def find_itinerary(boarding_passes):
+    # map all departures and arrivals using a dict
+    flightsDict = {}
+    
+    for departure, arrival in boarding_passes:
+        flightsDict[departure] = arrival
+    
+    # find the starting point
+    start = None
+    
+    for departure, arrival in flightsDict.items():
+        if departure not in flightsDict.values():
+            start = departure
+    
+    # perofrm dfs to find the order
+    flightOrder = []
+    
+    def dfs_helper(currFlight, flightOrder):
+        if not currFlight:
+            return 
+        
+        flightOrder.append(currFlight)
+        
+        next_flight = flightsDict.get(currFlight, None)
+        dfs_helper(next_flight, flightOrder)
+        
+    dfs_helper(start, flightOrder)
+    
+    return flightOrder
+
+boarding_passes_1 = [
+                    ("JFK", "ATL"),
+                    ("SFO", "JFK"),
+                    ("ATL", "ORD"),
+                    ("LAX", "SFO")]
+
+boarding_passes_2 = [
+                    ("LAX", "DXB"),
+                    ("DFW", "JFK"),
+                    ("LHR", "DFW"),
+                    ("JFK", "LAX")]
+
+print(find_itinerary(boarding_passes_1))
+print(find_itinerary(boarding_passes_2))
