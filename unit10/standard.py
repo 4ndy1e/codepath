@@ -134,3 +134,61 @@ terminals2 = [[1,2],[5,1],[1,3],[1,4]]
 
 print(find_center(terminals1))
 print(find_center(terminals2))
+
+"""
+Problem 6: Finding All Reachable Destinations
+Input: dict (representing flights where key: current destination, value: list of reachable destinations from current destination), start (destination name)
+Output: list (a;; destomatopms reachable from the start)
+
+Plan: Use a BFS to iterate through all possible paths from the starting node and add the current node's value to the resulting list since it a reachable. 
+Once the BFS is over, every node that is accessible from the starting node will be in the resulting list, then return that list. 
+
+Psuedo Code:
+
+Create a queue with the starting destination in it. (queue to represent the nodes we want to traverse into next)
+Create a list to represent the visited destination (nodes)
+
+while queue is not empty:
+    currentDestination = queue.popleft()
+    add the current node to the visited list
+    
+    look up the current node in the dict to find it's list of destinations. 
+    loop through the currentDestination's list of desintations and add it to the queue if it has not been visited. 
+    
+return visited list
+"""
+
+from collections import deque
+
+def get_all_destinations(flights, start):
+    queue = deque()
+    queue.append(start)
+    
+    visited = []
+    
+    while queue:
+        currentDestination = queue.popleft()
+        visited.append(currentDestination)
+        
+        flightConnections = flights[currentDestination]
+        
+        for destination in flightConnections:
+            if destination not in visited:
+                queue.append(destination)
+            
+    return visited
+
+flights = {
+    "Tokyo": ["Sydney"],
+    "Sydney": ["Tokyo", "Beijing"],
+    "Beijing": ["Mexico City", "Helsinki"],
+    "Helsinki": ["Cairo", "New York"],
+    "Cairo": ["Helsinki", "Reykjavik"],
+    "Reykjavik": ["Cairo", "New York"],
+    "Mexico City": ["Sydney"],
+    "New York": []   
+}
+
+print(get_all_destinations(flights, "Beijing"))
+print(get_all_destinations(flights, "Helsinki"))
+
