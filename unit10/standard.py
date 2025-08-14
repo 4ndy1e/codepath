@@ -329,8 +329,6 @@ def can_rebook(flights, source, dest):
     existsPath = False
     
     def dfs_helper(nodeIndex, visited):
-        if nodeIndex in visited:
-            return
         if nodeIndex == dest:
             nonlocal existsPath
             existsPath = True
@@ -339,11 +337,47 @@ def can_rebook(flights, source, dest):
         connectedFlightsStatus = flights[nodeIndex]
         
         for flightNum in range(len(connectedFlightsStatus)):
-            if connectedFlightsStatus[flightNum] == 1:
+            if connectedFlightsStatus[flightNum] == 1 and flightNum not in visited:
                 dfs_helper(flightNum, visited)
                 
     dfs_helper(source, visited)
     return existsPath
+
+"""
+Other dfs appraoch 
+1) Create a visited list to track locations we have already checked.
+2) Define a recursive DFS function:
+    a) If the current location is `dest`, return True.
+    b) Mark the current location as visited.
+    c) Explore all neighbors of the current location.
+    d) If we find the destination through one of the neighbors, return True.
+3) If the DFS function completes without finding the destination, return False.
+4) Call the DFS function starting from `source`.
+"""
+def can_rebook_dfs(flights, source, dest):
+    numLocations = len(flights)
+    visited = [False] * numLocations
+    
+    def dfs(currFlightNum):
+        # base case 
+        if currFlightNum == dest:
+            return True
+        
+        # update visited nodes
+        visited[currFlightNum] = True
+        
+        # recursively call the function until we reach the base case
+        for currDestNumber in range(numLocations):
+            if visited[currDestNumber] == False and flights[currFlightNum][currDestNumber] == 1:
+                foundDestination = dfs(currDestNumber)
+                
+                if foundDestination:
+                    return True
+        
+        return False
+    
+    return dfs(source)
+
 
 flights1 = [
     [0, 1, 0], # Flight 0
@@ -359,8 +393,8 @@ flights2 = [
     [0, 0, 0, 0, 0]
 ]
 
-print(can_rebook(flights1, 0, 2))
-print(can_rebook(flights2, 0, 2)) 
+print(can_rebook_dfs(flights1, 0, 2))
+print(can_rebook_dfs(flights2, 0, 2)) 
 
 """
 Problem 2: Can Rebook Flight II
@@ -368,17 +402,74 @@ If you solved the above problem can_rebook() using Breadth First Search, try sol
 
 Evaluate the time complexity of your function. Define your variables and provide a rationale for why you believe your solution has the stated time complexity.
 
-Understand:
-Input:
-Output:
-Constraints:
+Understand: 
+Input: list (adjacency matrix), int (source), int (destination)
+Output: boolean (repsresents whether or not we can reach the destination from the source)
+Constraints: 
+    - flights[i][j] = 1 means we can get from i to j
 Edge Cases:
 
-Plan:
+Plan: Use a BFS to traverse the graph and see if we can get to the destination or not. If the current node's neighbor has a 1 and it is equal to the 
+destination, we know it is reachable. 
 
 Pseudo Code:
+numLocations = len(flights)
+
+queue = deque([source])
+visited = [False] * numLocations
+
+while queue:
+    current flight is at the start of the queue (popleft)
+    
+    update the visited boolean of the current flight to indicate it is visited
+    
+    iterate through the flight status of the current flight:
+        if a flightNum has a status of 1 and it is not visited:
+            if the flightNum is the destination number:
+                return True
+            
+            add the flightnum to the queue
+            
+return False if we go through all paths without finding the destination number 
 """
 
+def can_rebook_bfs(flights, source, dest):
+    numLocations = len(flights)
+    
+    queue = deque([source])
+    visited = [False] * numLocations
+    
+    while queue:
+        currentFlightNum = queue.popleft()
+        
+        visited[currentFlightNum] = True
+        
+        # check the connected flights for this current flight
+        for currDestNum in range(numLocations):
+            if flights[currentFlightNum][currDestNum] == 1 and not visited[currDestNum]:
+                if currDestNum == dest:
+                    return True
+                
+                queue.append(currDestNum)
+
+    return False
+
+flights1 = [
+    [0, 1, 0], # Flight 0
+    [0, 0, 1], # Flight 1
+    [0, 0, 0]  # Flight 2
+]
+
+flights2 = [
+    [0, 1, 0, 1, 0],
+    [0, 0, 0, 1, 0],
+    [0, 0, 0, 0, 1],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0]
+]
+
+print(can_rebook_bfs(flights1, 0, 2))
+print(can_rebook_bfs(flights2, 0, 2)) 
 """
 Problem 3: Number of Flights
 You are a travel planner and have an adjacency matrix flights with n airports labeled 0 to n-1 where flights[i][j] = 1 indicates CodePath Airlines offers a flight from airport i to airport j. You are planning a trip for a client and want to know the minimum number of flights (edges) it will take to travel from airport start to their final destination airport destination on CodePath Airlines.
