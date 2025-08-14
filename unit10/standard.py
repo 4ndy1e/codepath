@@ -285,3 +285,155 @@ boarding_passes_2 = [
 
 print(find_itinerary(boarding_passes_1))
 print(find_itinerary(boarding_passes_2))
+
+"""
+Session 2 
+"""
+
+"""
+Problem 1: Can Rebook Flight
+Oh no! Your flight has been cancelled and you need to rebook. Given an adjacency matrix of today's flights flights where each flight is labeled 0 to n-1 and flights[i][j] = 1 indicates that there is an available flight from location i to location j, return True if there exists a path from your current location source to your final destination dest. Otherwise return False.
+
+Evaluate the time complexity of your function. Define your variables and provide a rationale for why you believe your solution has the stated time complexity.
+
+Understand:
+Input:
+Output:
+Constraints:
+Edge Cases:
+
+Plan:
+
+Pseudo Code:
+"""
+
+"""
+Problem 2: Can Rebook Flight II
+If you solved the above problem can_rebook() using Breadth First Search, try solving it using Depth First Search. If you solved it using Depth First Search, solve it using Breadth First Search.
+
+Evaluate the time complexity of your function. Define your variables and provide a rationale for why you believe your solution has the stated time complexity.
+
+Understand:
+Input:
+Output:
+Constraints:
+Edge Cases:
+
+Plan:
+
+Pseudo Code:
+"""
+
+"""
+Problem 3: Number of Flights
+You are a travel planner and have an adjacency matrix flights with n airports labeled 0 to n-1 where flights[i][j] = 1 indicates CodePath Airlines offers a flight from airport i to airport j. You are planning a trip for a client and want to know the minimum number of flights (edges) it will take to travel from airport start to their final destination airport destination on CodePath Airlines.
+
+Return the minimum number of flights needed to travel from airport i to airport j. If it is not possible to fly from airport i to airport j, return -1.
+
+Understand:
+Input:
+Output:
+Constraints:
+Edge Cases:
+
+Plan:
+
+Pseudo Code:
+"""
+
+"""
+Problem 4: Number of Airline Regions
+CodePath Airlines operates in different regions around the world. Some airports are connected directly with flights, while others are not. However, if airport a is connected directly to airport b, and airport b is connected directly to airport c, then airport a is indirectly connected to airport c.
+
+An airline region is a group of directly or indirectly connected airports and no other airports outside of the group.
+
+You are given an n x n matrix is_connected where is_connected[i][j] = 1 if CodePath Airlines offers a direct flight between airport i and airport j, and is_connected[i][j] = 0 otherwise.
+
+Return the total number of airline regions operated by CodePath Airlines.
+
+Understand:
+Input:
+Output:
+Constraints:
+Edge Cases:
+
+Plan:
+
+Pseudo Code:
+"""
+
+"""
+Problem 5: Get Flight Cost
+You are given an adjacency dictionary flights where for any location source, flights[source] is a list of tuples in the form (destination, cost) indicating that there exists a flight from source to destination at ticket price cost.
+
+Given a starting location start and a final destination dest return the total cost of flying from start to dest. If it is not possible to fly from start to dest, return -1. If there are multiple possible paths from start to dest, return any of the possible answers.
+
+Understand:
+Input:
+Output:
+Constraints:
+Edge Cases:
+
+Plan:
+
+Pseudo Code:
+"""
+
+"""
+Problem 6: Fixing Flight Booking Software
+CodePath Airlines uses Breadth First Search to suggest the route with the least number of layovers to its customers. But their software has a bug and is malfunctioning. Help the airline by identifying and fixing the bug.
+
+When properly implemented, the function should accept an adjacency dictionary flights and returns a list with the shortest path from a source location to a destination location.
+
+For this problem:
+
+Identify and fix any bug(s) in the code.
+
+Evaluate the time complexity of the function. Evaluate the time complexity of your function. Define your variables and provide a rationale for why you believe your solution has the stated time complexity.
+
+If CodePath Airlines used an adjacency matrix instead of an adjacency dictionary/list, would the time complexity change? Why or why not?
+
+Understand:
+Input:
+Output:
+Constraints:
+Edge Cases:
+
+Plan:
+
+Pseudo Code:
+"""
+
+"""
+Problem 7: Expanding Flight Offerings
+CodePath Airlines wants to expand their flight offerings so that for any airport they operate out of, it is possible to reach all other airports. They track their current flight offerings in an adjacency dictionary flights where each key is an airport i and flights[i] is an array indicating that there is a flight from destination i to each destination in flights[i]. Assume that if there is flight from airport i to airport j, the reverse is also true.
+
+Given flights, return the minimum number of flights (edges) that need to be added such that there is flight path from each airport in flights to every other airport.
+
+Understand:
+Input:
+Output:
+Constraints:
+Edge Cases:
+
+Plan:
+
+Pseudo Code:
+"""
+
+"""
+Problem 8: Get Flight Itinerary
+Given an adjacency dictionary of flights flights where each key is an airport i and flights[i] is an array indicating that there is a flight from destination i to each destination in flights[i], return an array with the flight path from a given source location to a given destination location.
+
+If there are multiple flight paths from the source to destination, return any flight path.
+
+Understand:
+Input:
+Output:
+Constraints:
+Edge Cases:
+
+Plan:
+
+Pseudo Code:
+"""
