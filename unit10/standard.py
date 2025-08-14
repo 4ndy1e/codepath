@@ -271,20 +271,20 @@ def find_itinerary(boarding_passes):
     
     return flightOrder
 
-boarding_passes_1 = [
-                    ("JFK", "ATL"),
-                    ("SFO", "JFK"),
-                    ("ATL", "ORD"),
-                    ("LAX", "SFO")]
+# boarding_passes_1 = [
+#                     ("JFK", "ATL"),
+#                     ("SFO", "JFK"),
+#                     ("ATL", "ORD"),
+#                     ("LAX", "SFO")]
 
-boarding_passes_2 = [
-                    ("LAX", "DXB"),
-                    ("DFW", "JFK"),
-                    ("LHR", "DFW"),
-                    ("JFK", "LAX")]
+# boarding_passes_2 = [
+#                     ("LAX", "DXB"),
+#                     ("DFW", "JFK"),
+#                     ("LHR", "DFW"),
+#                     ("JFK", "LAX")]
 
-print(find_itinerary(boarding_passes_1))
-print(find_itinerary(boarding_passes_2))
+# print(find_itinerary(boarding_passes_1))
+# print(find_itinerary(boarding_passes_2))
 
 """
 Session 2 
@@ -296,16 +296,71 @@ Oh no! Your flight has been cancelled and you need to rebook. Given an adjacency
 
 Evaluate the time complexity of your function. Define your variables and provide a rationale for why you believe your solution has the stated time complexity.
 
-Understand:
-Input:
-Output:
+Understand: 
+Input: list (adjacency matrix of today's flights), integer (source), integer (destination)
+Output: boolean (true, if there exists a path from source to destination)
 Constraints:
+    - each flight is labled 0 to n-1
+    - flights[i][j] = 1 means there is a flight from i to j
 Edge Cases:
+    - no flights -> return False
 
-Plan:
+Plan: Use a DFS to go through the graph. If the current node is the destination then we know we can reach the destination, return True. 
 
 Pseudo Code:
+visited = set()
+isPath = False
+
+def dfs_helper(nodeIndex, visited):
+    if nodeIndex is in visited, return
+    if nodeIndex is equal to the destination, set the boolean as True
+    
+    get the nodeIndex's adjacency list
+    for each flight in the list:
+        if the flight is connected, call the dfs helper on the flight
+
+call the dfs_helper function
+
+return isPath boolean
 """
+
+def can_rebook(flights, source, dest):
+    visited = set()
+    existsPath = False
+    
+    def dfs_helper(nodeIndex, visited):
+        if nodeIndex in visited:
+            return
+        if nodeIndex == dest:
+            nonlocal existsPath
+            existsPath = True
+            return
+        
+        connectedFlightsStatus = flights[nodeIndex]
+        
+        for flightNum in range(len(connectedFlightsStatus)):
+            if connectedFlightsStatus[flightNum] == 1:
+                dfs_helper(flightNum, visited)
+                
+    dfs_helper(source, visited)
+    return existsPath
+
+flights1 = [
+    [0, 1, 0], # Flight 0
+    [0, 0, 1], # Flight 1
+    [0, 0, 0]  # Flight 2
+]
+
+flights2 = [
+    [0, 1, 0, 1, 0],
+    [0, 0, 0, 1, 0],
+    [0, 0, 0, 0, 1],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0]
+]
+
+print(can_rebook(flights1, 0, 2))
+print(can_rebook(flights2, 0, 2)) 
 
 """
 Problem 2: Can Rebook Flight II
