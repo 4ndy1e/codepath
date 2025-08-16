@@ -546,6 +546,67 @@ print(counting_flights(flights, 0, 4))
 print(counting_flights(flights, 4, 0))
 
 """
+BFS Approach
+Plan: Use a BFS by creating a queue to keep track of which nodes to traverse next and traverse the graph level by level. If we encounter a node that 
+is equal to the destination. We have found the shortest path to it. Update the pathlength and return the pathlength. 
+
+numFlights = len(flights)
+queue = deque([starting node])
+visited = [False] * len(numFlights)
+level = 0
+
+while queue:
+    levelLen = len(queue)
+    
+    for i in range(levelLen):
+        process the current node by popping from the queue
+        update it's status in the visited list
+        
+        if the current node is the destination, retrun the level
+        
+        for neighborFlightNum in range(numFlights):
+            if the neighbor is not visited and it is connected to the current node: 
+        
+    increment the level after the current level has been processed
+
+return -1
+
+
+Time and Space Complexity:
+Time: O(V^2) - go through each node and then the node's neighbors to check if they are connected
+Space: O(V) - queue will hold at most v nodes in the case where all nodes are connected
+"""
+
+def counting_flights_bfs(flights, i, j):
+    queue = deque([i])
+    visited = [False] * len(flights)
+    level = 0
+    
+    while queue:
+        # proces the current level
+        levelLen = len(queue)
+        
+        for i in range(levelLen):
+            currentNode = queue.popleft()
+            visited[currentNode] = 1
+            
+            if currentNode == j:
+                return level
+            
+            # add the current node's neighbor's to be processed after this level
+            for neighborFlightNum in range(len(flights)):
+                if not visited[neighborFlightNum] and flights[currentNode][neighborFlightNum] == 1:
+                    queue.append(neighborFlightNum)
+        
+        level += 1
+
+    # return -1 if we go through all nodes and never found the destination
+    return -1
+
+print(counting_flights_bfs(flights, 0, 2))  
+print(counting_flights_bfs(flights, 0, 4))
+print(counting_flights_bfs(flights, 4, 0))
+"""
 Problem 4: Number of Airline Regions
 CodePath Airlines operates in different regions around the world. Some airports are connected directly with flights, while others are not. However, if airport a is connected directly to airport b, and airport b is connected directly to airport c, then airport a is indirectly connected to airport c.
 
