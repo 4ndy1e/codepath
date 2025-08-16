@@ -379,22 +379,22 @@ def can_rebook_dfs(flights, source, dest):
     return dfs(source)
 
 
-flights1 = [
-    [0, 1, 0], # Flight 0
-    [0, 0, 1], # Flight 1
-    [0, 0, 0]  # Flight 2
-]
+# flights1 = [
+#     [0, 1, 0], # Flight 0
+#     [0, 0, 1], # Flight 1
+#     [0, 0, 0]  # Flight 2
+# ]
 
-flights2 = [
-    [0, 1, 0, 1, 0],
-    [0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0]
-]
+# flights2 = [
+#     [0, 1, 0, 1, 0],
+#     [0, 0, 0, 1, 0],
+#     [0, 0, 0, 0, 1],
+#     [0, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 0]
+# ]
 
-print(can_rebook_dfs(flights1, 0, 2))
-print(can_rebook_dfs(flights2, 0, 2)) 
+# print(can_rebook_dfs(flights1, 0, 2))
+# print(can_rebook_dfs(flights2, 0, 2)) 
 
 """
 Problem 2: Can Rebook Flight II
@@ -454,22 +454,22 @@ def can_rebook_bfs(flights, source, dest):
 
     return False
 
-flights1 = [
-    [0, 1, 0], # Flight 0
-    [0, 0, 1], # Flight 1
-    [0, 0, 0]  # Flight 2
-]
+# flights1 = [
+#     [0, 1, 0], # Flight 0
+#     [0, 0, 1], # Flight 1
+#     [0, 0, 0]  # Flight 2
+# ]
 
-flights2 = [
-    [0, 1, 0, 1, 0],
-    [0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0]
-]
+# flights2 = [
+#     [0, 1, 0, 1, 0],
+#     [0, 0, 0, 1, 0],
+#     [0, 0, 0, 0, 1],
+#     [0, 0, 0, 0, 0],
+#     [0, 0, 0, 0, 0]
+# ]
 
-print(can_rebook_bfs(flights1, 0, 2))
-print(can_rebook_bfs(flights2, 0, 2)) 
+# print(can_rebook_bfs(flights1, 0, 2))
+# print(can_rebook_bfs(flights2, 0, 2)) 
 """
 Problem 3: Number of Flights
 You are a travel planner and have an adjacency matrix flights with n airports labeled 0 to n-1 where flights[i][j] = 1 indicates CodePath Airlines offers a flight from airport i to airport j. You are planning a trip for a client and want to know the minimum number of flights (edges) it will take to travel from airport start to their final destination airport destination on CodePath Airlines.
@@ -477,15 +477,73 @@ You are a travel planner and have an adjacency matrix flights with n airports la
 Return the minimum number of flights needed to travel from airport i to airport j. If it is not possible to fly from airport i to airport j, return -1.
 
 Understand:
-Input:
-Output:
-Constraints:
+Input: list (adjacency matrix flights labeled from 0 to n-1)
+Output: int (min number of flights (edges) it will take to travel from i to j (airport to destination))
+Constraints: 
+    - we want the min number of flights
 Edge Cases:
-
-Plan:
+    - cannot travel from i to j -> -1
+Plan: Use DFS to traverse through each path of the node and determine which path is the min resursively.
 
 Pseudo Code:
+numFlights = len(flights)
+visited = [False] * numFlights
+pathLength = flaot("inf")
+
+def dfs(node, visited, pathTotal):
+    update the current node's visited status
+    
+    Base Case
+    if the node is the destinaton, set the pathLength to the min of the current pathLength and current pathTotal, return 
+    
+    Recursive Case 
+    for i in range(numFlights):
+        if the neighbor is not visited and it can be visited from the current node:
+            make recursive call on the neighbor with updated pathTotal
+    
+dfs(0, visited, 1)
+
+if pathLength is still inf, return -1
+otherwise, return pathLength
+
+Time and Space Complexity:
+Time: O(V^2)
+Space: O(V)
 """
+
+def counting_flights(flights, i, j):
+    numFlights = len(flights)
+    pathLength = float("inf")
+    
+    def dfs(node, currentPathLength):
+        # base case
+        if node == j:
+            nonlocal pathLength
+            pathLength = min(pathLength, currentPathLength)
+            
+        # recursive case    
+        for neighborFlight in range(numFlights):
+            if flights[node][neighborFlight] == 1:
+                dfs(neighborFlight, currentPathLength+1)
+
+    dfs(i, 0)
+    
+    if pathLength == float("inf"):
+        return -1
+    
+    return pathLength
+
+flights = [
+    [0, 1, 1, 0, 0], # Airport 0
+    [0, 0, 1, 0, 0], # Airport 1
+    [0, 0, 0, 1, 0], # Airport 2
+    [0, 0, 0, 0, 1], # Airport 3
+    [0, 0, 0, 0, 0]  # Airport 4
+]
+
+print(counting_flights(flights, 0, 2))  
+print(counting_flights(flights, 0, 4))
+print(counting_flights(flights, 4, 0))
 
 """
 Problem 4: Number of Airline Regions
