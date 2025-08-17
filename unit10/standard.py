@@ -685,17 +685,67 @@ You are given an adjacency dictionary flights where for any location source, fli
 Given a starting location start and a final destination dest return the total cost of flying from start to dest. If it is not possible to fly from start to dest, return -1. If there are multiple possible paths from start to dest, return any of the possible answers.
 
 Understand:
-Input:
-Output:
+Input:adjacency dict (flights, flights[source] = (destination, cost)]), start (source name), destination (dest name)
+Output: integer (cost to get from start to end), -1 if not possible
 Constraints:
 Edge Cases:
 
-Plan:
+Plan: Use a DFS to search through each path until one from the start to the destination is found. To keep track of the cost, add a a parameter to the dfs
+helper function. 
 
 Pseudo Code:
+visited = set()
+
+def dfs(node, visited, totalCost):
+    add the current node to the visited set
+    
+    Base Case
+    if node is equal to the dest, return the total cost
+    
+    call the dfs helper function on the current node's list of neighbors and update the total cost
+    
+    remove current node from visited to backtrack for dfs
+    return -1 if all paths are visited and there is no dest node
+    
+return call the dfs function on the starting noode with the visited set and totalCost of 0
 """
 
+def calculate_cost(flights, start, dest):
+    visited = set()
+    
+    def dfs(node, visited, totalCost):
+        visited.add(node)
+        
+        # base case
+        if node == dest:
+            return totalCost
+        
+        # recursive calls
+        neighbors = flights[node]
+        
+        for currNeighbor, currNeighborCost in neighbors:
+            if currNeighbor not in visited:
+                res = dfs(currNeighbor, visited, totalCost + currNeighborCost)
+                
+                if res != -1:
+                    return res
+        
+        # dfs backtracking 
+        # visited.remove(node)
+        
+        return -1
 
+    return dfs(start, visited, 0)
+
+flights = {
+    'LAX': [('SFO', 50)],
+    'SFO': [('LAX', 50), ('ORD', 100), ('ERW', 210)],
+    'ERW': [('SFO', 210), ('ORD', 100)],
+    'ORD': [('ERW', 300), ('SFO', 100), ('MIA', 400)],
+    'MIA': [('ORD', 400)]
+}
+
+print(calculate_cost(flights, 'LAX', 'MIA'))
 
 """
 Problem 6: Fixing Flight Booking Software
@@ -729,15 +779,65 @@ CodePath Airlines wants to expand their flight offerings so that for any airport
 Given flights, return the minimum number of flights (edges) that need to be added such that there is flight path from each airport in flights to every other airport.
 
 Understand:
-Input:
-Output:
+Input: adjacency dict (flights, where flight[i] contains a list of airport destinations) 
+Output: integer (min number of flights (edges) that need to be added such that there is a flight from each airport from flights to every other airport)
 Constraints:
+    - if there is a flight from i to j, the reverse is also true
 Edge Cases:
 
-Plan:
+Plan: Use a dfs to find the number of regions or components in the graph. The min number of flights that need to be added to connect all these are 
+essentially going to be the total number of components/regions - 1. 
 
 Pseudo Code:
+visited = set()
+totalRegions = 0
+
+def dfs(node, visited):
+    add node to visited
+    
+    recursively call the dfs function on the current node's neighbor if it has not been visited yet
+
+for each key (location) in the adjacecency dict:
+    if the location has not been visited, call the recursive dfs function on the location and increment the region count
+    
+return totalRegions - 1
+
+Time and Space Complexity:
+Time: O(n) - visit each node at least one time 
+Space: O(n) - using a set to store the nodes that have been visited
 """
+
+def  min_flights_to_expand(flights):
+    visited = set()
+    totalRegions = 0 
+    
+    # helper function for the dfs 
+    def dfs(node, visited):
+        visited.add(node)
+        
+        neighbors = flights[node]
+        
+        for currNeighbor in neighbors:
+            if currNeighbor not in visited:
+                dfs(currNeighbor, visited)
+    
+    # call the dfs on each location if it has not been visited yet (indicates a new region)
+    for location in flights:
+        if location not in visited:
+            dfs(location, visited)
+            totalRegions += 1
+    
+    return max(0, totalRegions - 1)
+
+flights = {
+    'JFK': ['LAX', 'SFO'],
+    'LAX': ['JFK', 'SFO'],
+    'SFO': ['JFK', 'LAX'],
+    'ORD': ['ATL'],
+    'ATL': ['ORD']
+}
+
+print(min_flights_to_expand(flights))
 
 """
 Problem 8: Get Flight Itinerary
