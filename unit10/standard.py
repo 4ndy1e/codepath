@@ -815,7 +815,7 @@ def  min_flights_to_expand(flights):
     def dfs(node, visited):
         visited.add(node)
         
-        neighbors = flights[node]
+        neighbors = flights.get(node, [])
         
         for currNeighbor in neighbors:
             if currNeighbor not in visited:
