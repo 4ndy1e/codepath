@@ -541,9 +541,9 @@ flights = [
     [0, 0, 0, 0, 0]  # Airport 4
 ]
 
-print(counting_flights(flights, 0, 2))  
-print(counting_flights(flights, 0, 4))
-print(counting_flights(flights, 4, 0))
+# print(counting_flights(flights, 0, 2))  
+# print(counting_flights(flights, 0, 4))
+# print(counting_flights(flights, 4, 0))
 
 """
 BFS Approach
@@ -603,9 +603,9 @@ def counting_flights_bfs(flights, i, j):
     # return -1 if we go through all nodes and never found the destination
     return -1
 
-print(counting_flights_bfs(flights, 0, 2))  
-print(counting_flights_bfs(flights, 0, 4))
-print(counting_flights_bfs(flights, 4, 0))
+# print(counting_flights_bfs(flights, 0, 2))  
+# print(counting_flights_bfs(flights, 0, 4))
+# print(counting_flights_bfs(flights, 4, 0))
 """
 Problem 4: Number of Airline Regions
 CodePath Airlines operates in different regions around the world. Some airports are connected directly with flights, while others are not. However, if airport a is connected directly to airport b, and airport b is connected directly to airport c, then airport a is indirectly connected to airport c.
@@ -616,16 +616,67 @@ You are given an n x n matrix is_connected where is_connected[i][j] = 1 if CodeP
 
 Return the total number of airline regions operated by CodePath Airlines.
 
-Understand:
-Input:
-Output:
+Understand: 
+Input: n x n matrix (is_connected[i][j] = 1)
+Output: int (total number of airline regions)
 Constraints:
+    - airline region is a group of directly/indirectly connected airports and no other airports outside of the group
 Edge Cases:
 
-Plan:
+Plan: use a DFS traversal and keep track of the nodes that have already been visited. There is a new region when we encounter a flight that has 
+not been visited because it is not connected to the region of flights we performed the dfs on. 
 
 Pseudo Code:
+visited = set()
+totalRegions
+
+def dfs(node, visited):
+    add the current node to the visited set
+    
+    for neighborNodeNum in range(len(is_connected)):
+        if neighborNodeNum is not visited and it is connectedd, recursively call the function on this node 
+        
+for flightNum in range(is_connected):
+    if flightNum not in visited:
+        call the dfs function on the current node
+        increment the total number of regions
+        
+return totalRegions
 """
+
+def num_airline_regions(is_connected):
+    visited = set()
+    totalRegions = 0
+    
+    def dfs(node, visitd):
+        visitd.add(node)
+        
+        for neighborNodeNum in range(len(is_connected)):
+            if neighborNodeNum not in visitd and is_connected[node][neighborNodeNum] == 1:
+                dfs(neighborNodeNum, visited)
+
+    for flightNum in range(len(is_connected)):
+        if flightNum not in visited:
+            dfs(flightNum, visited)
+            totalRegions += 1
+    
+    return totalRegions
+
+is_connected1 = [
+    [1, 1, 0],
+    [1, 1, 0],
+    [0, 0, 1]
+]
+
+is_connected2 = [
+    [1, 0, 0, 1],
+    [0, 1, 1, 0],
+    [0, 1, 1, 0],
+    [1, 0, 0, 1]
+]
+
+# print(num_airline_regions(is_connected1))
+# print(num_airline_regions(is_connected2)) 
 
 """
 Problem 5: Get Flight Cost
@@ -643,6 +694,8 @@ Plan:
 
 Pseudo Code:
 """
+
+
 
 """
 Problem 6: Fixing Flight Booking Software
