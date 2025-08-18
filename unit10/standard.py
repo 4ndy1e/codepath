@@ -737,15 +737,15 @@ def calculate_cost(flights, start, dest):
 
     return dfs(start, visited, 0)
 
-flights = {
-    'LAX': [('SFO', 50)],
-    'SFO': [('LAX', 50), ('ORD', 100), ('ERW', 210)],
-    'ERW': [('SFO', 210), ('ORD', 100)],
-    'ORD': [('ERW', 300), ('SFO', 100), ('MIA', 400)],
-    'MIA': [('ORD', 400)]
-}
+# flights = {
+#     'LAX': [('SFO', 50)],
+#     'SFO': [('LAX', 50), ('ORD', 100), ('ERW', 210)],
+#     'ERW': [('SFO', 210), ('ORD', 100)],
+#     'ORD': [('ERW', 300), ('SFO', 100), ('MIA', 400)],
+#     'MIA': [('ORD', 400)]
+# }
 
-print(calculate_cost(flights, 'LAX', 'MIA'))
+# print(calculate_cost(flights, 'LAX', 'MIA'))
 
 """
 Problem 6: Fixing Flight Booking Software
@@ -829,15 +829,15 @@ def  min_flights_to_expand(flights):
     
     return max(0, totalRegions - 1)
 
-flights = {
-    'JFK': ['LAX', 'SFO'],
-    'LAX': ['JFK', 'SFO'],
-    'SFO': ['JFK', 'LAX'],
-    'ORD': ['ATL'],
-    'ATL': ['ORD']
-}
+# flights = {
+#     'JFK': ['LAX', 'SFO'],
+#     'LAX': ['JFK', 'SFO'],
+#     'SFO': ['JFK', 'LAX'],
+#     'ORD': ['ATL'],
+#     'ATL': ['ORD']
+# }
 
-print(min_flights_to_expand(flights))
+# print(min_flights_to_expand(flights))
 
 """
 Problem 8: Get Flight Itinerary
@@ -846,12 +846,73 @@ Given an adjacency dictionary of flights flights where each key is an airport i 
 If there are multiple flight paths from the source to destination, return any flight path.
 
 Understand:
-Input:
-Output:
+Input: adjacency dict 
+Output: array (containing the path from the start to the end)
 Constraints:
 Edge Cases:
+    - no destination -> []
 
-Plan:
+Plan: use a DFS to traverse through each path while keeping track of the current paths. If we reach the destination, return the path. 
 
 Pseudo Code:
+visited = set()
+
+def dfs(node, visited, currentPath):
+    add the current node to visited
+    add the current node to the currentPath
+    
+    if node == dest:
+        return currentPath
+        
+    neighbors = flights.get(node, [])
+    
+    for currNeighbor in neighbors:
+        if the currNeighbor is not visited:
+            result = call the dfs function on the neighbor
+            
+            if the result of the neighbor is not an empty list:
+                return the result
+                
+    return an empty list we cannot find the destination after traversing though all nodes
+    
+return call to the dfs function
+
+Time and Space Complexity:
+time: O(V + E) - go through each node and edge in the graph
+space: O(V) - for the visited set and the number of recurisve calls on the call stack
 """
+
+def get_itinerary(flights, source, dest):
+    visited = set()
+    
+    def dfs(node, visited, currentPath):
+        visited.add(node)
+        currentPath.append(node)
+        
+        # base case
+        if node == dest:
+            return currentPath
+        
+        neighbors = flights.get(node, [])
+        
+        for currNeighbor in neighbors:
+            if currNeighbor not in visited:
+                res = dfs(currNeighbor, visited, currentPath)
+                
+                if res:
+                    return res
+
+        visited.remove(node)
+        return []
+    
+    return dfs(source, visited, [])
+
+flights = {
+    'LAX': ['SFO'],
+    'SFO': ['LAX', 'ORD', 'ERW'],
+    'ERW': ['SFO', 'ORD'],
+    'ORD': ['ERW', 'SFO', 'MIA'],
+    'MIA': ['ORD']
+}
+
+print(get_itinerary(flights, 'LAX', 'MIA'))
